@@ -15,7 +15,10 @@ prepare_modeling:
 	mkdir -p build
 	cd build && git clone --single-branch -b $(modeling-version)  https://github.com/crimson-unicorn/modeling
 
-prepare: prepare_parsers prepare_graphchi prepare_modeling
+prepare_output:
+	mkdir -p output
+
+prepare: prepare_parsers prepare_graphchi prepare_modeling prepare_output
 
 clean:
 	rm -rf build

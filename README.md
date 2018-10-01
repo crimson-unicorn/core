@@ -16,3 +16,10 @@ For example to use the `selective` branch/tag for the graphchi dependency:
 ```
 make graphchi-version=selective prepare
 ```
+
+## Clean
+
+Clean everything:
+```
+make clean
+```
