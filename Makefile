@@ -20,5 +20,20 @@ prepare_output:
 
 prepare: prepare_parsers prepare_graphchi prepare_modeling prepare_output
 
+define dataverse_download
+	wget https://dataverse.harvard.edu/api/access/datafile/:persistentId?persistentId=doi:$(1) -O data/tmp.tar.gz
+	cd data && tar -xzf tmp.tar.gz
+	rm -f data/tmp.tar.gz
+endef
+
+download_wget:
+	mkdir -p data
+	$(call dataverse_download,10.7910/DVN/8GKEON/OFFMN3)
+	$(call dataverse_download,10.7910/DVN/8GKEON/57BKKU)
+	$(call dataverse_download,10.7910/DVN/8GKEON/YKHWW4)
+	$(call dataverse_download,10.7910/DVN/8GKEON/AQLIIL)
+
+
 clean:
 	rm -rf build
+	rm -rf data
