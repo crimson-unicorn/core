@@ -17,6 +17,13 @@ For example to use the `selective` branch/tag for the graphchi dependency:
 make graphchi-version=selective prepare
 ```
 
+## Download datasets
+
+To download, for example the wget datasets:
+```
+make download_wget
+```
+
 ## Clean
 
 Clean everything:

@@ -33,7 +33,6 @@ download_wget:
 	$(call dataverse_download,10.7910/DVN/8GKEON/YKHWW4)
 	$(call dataverse_download,10.7910/DVN/8GKEON/AQLIIL)
 
-
 clean:
 	rm -rf build
 	rm -rf data
