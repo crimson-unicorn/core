@@ -33,6 +33,17 @@ download_wget:
 	$(call dataverse_download,10.7910/DVN/8GKEON/YKHWW4)
 	$(call dataverse_download,10.7910/DVN/8GKEON/AQLIIL)
 
+download_streamspot:
+	mkdir -p data
+	$(call dataverse_download,10.7910/DVN/83KYJY/2MXIOX)
+	$(call dataverse_download,10.7910/DVN/83KYJY/OGLWB4)
+	$(call dataverse_download,10.7910/DVN/83KYJY/WYRXPD)
+	$(call dataverse_download,10.7910/DVN/83KYJY/5ODRYF)
+	$(call dataverse_download,10.7910/DVN/83KYJY/2EQZ4L)
+	$(call dataverse_download,10.7910/DVN/83KYJY/WKXIAY)
+	$(call dataverse_download,10.7910/DVN/83KYJY/JVJXX5)
+	
+
 clean:
 	rm -rf build
 	rm -rf data
