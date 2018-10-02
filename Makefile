@@ -42,7 +42,11 @@ download_streamspot:
 	$(call dataverse_download,10.7910/DVN/83KYJY/2EQZ4L)
 	$(call dataverse_download,10.7910/DVN/83KYJY/WKXIAY)
 	$(call dataverse_download,10.7910/DVN/83KYJY/JVJXX5)
-	
+
+run_toy:
+	cd build/parsers && make toy
+	cd build/graphchi-cpp && make run_toy
+	cd build/modeling && python model.py --train_dir ../../data/train_toy/ --test_dir ../../data/test_toy/
 
 clean:
 	rm -rf build
