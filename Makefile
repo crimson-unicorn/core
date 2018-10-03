@@ -34,12 +34,6 @@ download_wget:
 
 download_streamspot:
 	mkdir -p data
-	$(call dataverse_download,10.7910/DVN/83KYJY/2MXIOX)
-	$(call dataverse_download,10.7910/DVN/83KYJY/OGLWB4)
-	$(call dataverse_download,10.7910/DVN/83KYJY/WYRXPD)
-	$(call dataverse_download,10.7910/DVN/83KYJY/5ODRYF)
-	$(call dataverse_download,10.7910/DVN/83KYJY/2EQZ4L)
-	$(call dataverse_download,10.7910/DVN/83KYJY/WKXIAY)
 	$(call dataverse_download,10.7910/DVN/83KYJY/JVJXX5)
 
 download_wget_long:
