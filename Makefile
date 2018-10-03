@@ -28,10 +28,9 @@ endef
 
 download_wget:
 	mkdir -p data
-	$(call dataverse_download,10.7910/DVN/8GKEON/OFFMN3)
-	$(call dataverse_download,10.7910/DVN/8GKEON/57BKKU)
-	$(call dataverse_download,10.7910/DVN/8GKEON/YKHWW4)
-	$(call dataverse_download,10.7910/DVN/8GKEON/AQLIIL)
+	$(call dataverse_download,10.7910/DVN/IA8UOS/PJKEMZ)
+	$(call dataverse_download,10.7910/DVN/IA8UOS/RHTYM9)
+	$(call dataverse_download,10.7910/DVN/IA8UOS/DWRUSK)
 
 download_streamspot:
 	mkdir -p data
@@ -42,6 +41,13 @@ download_streamspot:
 	$(call dataverse_download,10.7910/DVN/83KYJY/2EQZ4L)
 	$(call dataverse_download,10.7910/DVN/83KYJY/WKXIAY)
 	$(call dataverse_download,10.7910/DVN/83KYJY/JVJXX5)
+
+download_wget_long:
+	mkdir -p data
+	$(call dataverse_download,10.7910/DVN/8GKEON/OFFMN3)
+	$(call dataverse_download,10.7910/DVN/8GKEON/57BKKU)
+	$(call dataverse_download,10.7910/DVN/8GKEON/YKHWW4)
+	$(call dataverse_download,10.7910/DVN/8GKEON/AQLIIL)
 
 run_toy:
 	cd build/parsers && make toy
@@ -56,6 +62,14 @@ run_streamspot:
 	cd build/modeling && python model.py --train_dir ../../data/train_streamspot/ --test_dir ../../data/test_streamspot/
 
 streamspot: prepare download_streamspot run_streamspot
+
+run_wget:
+	cd build/parsers && make wget_train && make wget_baseline_attack && make wget_interval_attack
+	cd build/graphchi-cpp && make run_wget && make run_wget_baseline_attack && make run_wget_interval_attack
+	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_baseline/
+	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_interval/	
+
+wget: prepare download_wget run_wget
 
 clean:
 	rm -rf build
