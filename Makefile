@@ -1,6 +1,8 @@
 parsers-version=master
 graphchi-version=master
 modeling-version=master
+number=0
+attack-type=baseline
 
 prepare_parsers:
 	mkdir -p build
@@ -58,12 +60,24 @@ run_streamspot:
 streamspot: prepare download_streamspot run_streamspot
 
 run_wget:
-	cd build/parsers && make wget_train && make wget_baseline_attack && make wget_interval_attack
+	cd build/parsers && make wget_train && make wget_baseline_attack && make wget_interval_attack && make wget_statistics
 	cd build/graphchi-cpp && make run_wget && make run_wget_baseline_attack && make run_wget_interval_attack
 	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_baseline/
 	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_interval/	
 
 wget: prepare download_wget run_wget
+
+run_single_benign_wget:
+	cd build/parsers && make number=$(number) single_wget_train
+	cd build/graphchi-cpp && make number=$(number) run_single_benign_wget
+
+eval_benign_wget: prepare download_wget run_single_benign_wget
+
+run_single_attack_wget:
+	cd build/parsers && make number=$(number) attack-type=$(attack-type) single_wget_attack
+	cd build/graphchi-cpp && make number=$(number) attack-type=$(attack-type) run_single_attack_wget
+
+eval_attack_wget: prepare download_wget run_single_attack_wget
 
 clean:
 	rm -rf build
