@@ -10,14 +10,26 @@ jobs:
     steps:
       - checkout
       - run:
-          name: prepare
-          command: 'make prepare_output'
+          name: update
+          command: 'apt-get update -qq'
       - run:
-          name: testCI
-          command: 'make testCI'
-      - add_ssh_keys:
-          fingerprints:
-            - "93:fc:d3:f5:33:3d:1d:79:dc:c9:0c:99:78:73:78:19"
+          name: sudo
+          command: 'apt-get install -y sudo'
+      - run:
+          name: dependencies
+          command: 'apt-get install -y python g++-4.9 libz-dev'
+      - run:
+          name: python
+          command: 'apt-get install -y python-pip python-dev build-essential'
+      - run:
+          name: pip
+          command: 'pip install --upgrade pip'
+      - run:
+          name: python-packages
+          command: 'pip install numpy scipy scikit-learn'
+      - run:
+          name: eval-benign-wget-perf
+          command: 'make eval_benign_wget'
       - deploy:
           name: Deploy
           command: |
