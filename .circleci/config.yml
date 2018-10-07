@@ -29,7 +29,7 @@ jobs:
           command: 'pip install numpy scipy scikit-learn'
       - run:
           name: run-prepare
-          command: 'make prepare'
+          command: 'make prepare_output'
       - run:
           name: run-fast
           command: 'make testCI'
@@ -46,7 +46,7 @@ jobs:
               if ! git diff-index --exit-code --quiet HEAD; then
                 echo 'Committing...'
                 git commit -a -m "[ci skip] CircleCI's commit ${CIRCLE_SHA1}"
-                git push -q https://${GH_TOKEN}@github.com/crimson-unicorn/graphchi-cpp.git $TARGET_BRANCH
+                git push -q https://${GH_TOKEN}@github.com/crimson-unicorn/output.git $TARGET_BRANCH
               else
                 echo 'Nothing to commit.'
               fi
