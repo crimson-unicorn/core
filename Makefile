@@ -18,7 +18,7 @@ prepare_modeling:
 	cd build && git clone --single-branch -b $(modeling-version)  https://github.com/crimson-unicorn/modeling
 
 prepare_output:
-	mkdir -p output
+	git clone https://github.com/crimson-unicorn/output.git
 
 prepare: prepare_parsers prepare_graphchi prepare_modeling prepare_output
 
@@ -43,7 +43,7 @@ download_wget_long:
 	$(call dataverse_download,10.7910/DVN/8GKEON/OFFMN3)
 	$(call dataverse_download,10.7910/DVN/8GKEON/57BKKU)
 	$(call dataverse_download,10.7910/DVN/8GKEON/YKHWW4)
-	$(call dataverse_download,10.7910/DVN/8GKEON/AQLIIL)
+	$(call dataverse_download,10.7910/DVN/8GKEON/gAQLIIL)
 
 run_toy:
 	cd build/parsers && make toy
@@ -78,6 +78,9 @@ run_single_attack_wget:
 	cd build/graphchi-cpp && make number=$(number) attack-type=$(attack-type) run_single_attack_wget
 
 eval_attack_wget: prepare download_wget run_single_attack_wget
+
+testCI:
+	cd output && touch test.txt
 
 clean:
 	rm -rf build
