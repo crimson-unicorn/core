@@ -21,7 +21,7 @@ prepare_output:
 prepare: prepare_parsers prepare_graphchi prepare_modeling prepare_output
 
 define dataverse_download
-	wget https://dataverse.harvard.edu/api/access/datafile/:persistentId?persistentId=doi:$(1) -O data/tmp.tar.gz
+	wget --retry-connrefused --waitretry=5 --read-timeout=30 --tries=50 --no-dns-cache https://dataverse.harvard.edu/api/access/datafile/:persistentId?persistentId=doi:$(1) -O data/tmp.tar.gz
 	cd data && tar -xzf tmp.tar.gz
 	rm -f data/tmp.tar.gz
 endef
@@ -61,7 +61,7 @@ run_wget:
 	cd build/parsers && make wget_train && make wget_baseline_attack && make wget_interval_attack
 	cd build/graphchi-cpp && make run_wget && make run_wget_baseline_attack && make run_wget_interval_attack
 	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_baseline/
-	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_interval/	
+	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_interval/
 
 wget: prepare download_wget run_wget
 
