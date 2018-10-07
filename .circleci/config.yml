@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: moul/kernel-builder:latest
+    working_directory: ~/circulate
+    environment:
+      - SOURCE_BRANCH: master
+      - TARGET_BRANCH: master
+    steps:
+      - checkout
+      - run:
+          name: update
+          command: 'apt-get update -qq'
+      - run:
+          name: sudo
+          command: 'apt-get install -y sudo'
+      - run:
+          name: dependencies
+          command: 'apt-get install -y python g++-4.9 libz-dev'
+      - run:
+          name: python
+          command: 'apt-get install -y python-pip python-dev build-essential'
+      - run:
+          name: pip
+          command: 'pip install --upgrade pip'
+      - run:
+          name: python-packages
+          command: 'pip install numpy scipy scikit-learn'
+      - run:
+          name: run-toy
+          command: 'make toy'
