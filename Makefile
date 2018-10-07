@@ -53,7 +53,7 @@ run_toy:
 toy: prepare download_streamspot run_toy
 
 run_streamspot:
-	cd build/parsers && make youtube && make gmail && make vgame && make download && make cnn && make attack
+	cd build/parsers && make youtube && make gmail && make vgame && make download && make cnn && make attack && make streamspot_statistics
 	cd build/graphchi-cpp && make run_youtube && make run_gmail && make run_vgame && make run_download && make run_cnn && make run_attack
 	cd build/modeling && python model.py --train_dir ../../data/train_streamspot/ --test_dir ../../data/test_streamspot/
 
