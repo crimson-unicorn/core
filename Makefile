@@ -28,9 +28,9 @@ endef
 
 download_wget:
 	mkdir -p data
-	$(call dataverse_download,10.7910/DVN/IA8UOS/PJKEMZ)
-	$(call dataverse_download,10.7910/DVN/IA8UOS/RHTYM9)
-	$(call dataverse_download,10.7910/DVN/IA8UOS/DWRUSK)
+	$(call dataverse_download,10.7910/DVN/IA8UOS/URG8XN)
+	$(call dataverse_download,10.7910/DVN/IA8UOS/1DBE7K)
+	$(call dataverse_download,10.7910/DVN/IA8UOS/34QRHK)
 
 download_streamspot:
 	mkdir -p data
