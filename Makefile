@@ -36,6 +36,11 @@ download_streamspot:
 	mkdir -p data
 	$(call dataverse_download,10.7910/DVN/83KYJY/JVJXX5)
 
+download_cadets:
+	mkdir -p data
+	$(call dataverse_download,10.7910/DVN/MPUCQU/GAMHTP)
+	$(call dataverse_download,10.7910/DVN/MPUCQU/D6SE4T)
+
 download_wget_long:
 	mkdir -p data
 	$(call dataverse_download,10.7910/DVN/8GKEON/OFFMN3)
@@ -64,6 +69,12 @@ run_wget:
 	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_interval/
 
 wget: prepare download_wget run_wget
+
+run_cadets:
+	cd build/graphchi-cpp && make run_cadets && make run_cadets_attack
+	cd build/modeling && python model.py --train_dir ../../data/train_cadets/ --test_dir ../../data/test_cadets/
+
+cadets: prepare download_cadets run_cadets
 
 clean:
 	rm -rf build
