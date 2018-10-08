@@ -28,5 +28,5 @@ jobs:
           name: python-packages
           command: 'pip install numpy scipy scikit-learn'
       - run:
-          name: run-toy
-          command: 'make wget'
+          name: run-cadets
+          command: 'make cadets'
