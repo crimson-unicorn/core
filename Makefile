@@ -79,6 +79,13 @@ run_single_attack_wget:
 
 eval_attack_wget: prepare download_wget run_single_attack_wget
 
+run_cadets:
+	cd build/parsers && make cadets_prepare && make cadets_train && make cadets_attack & make cadets_statistics
+	cd build/graphchi-cpp && make run_cadets && make run_cadets_attack
+	cd build/modeling && python model.py --train_dir ../../data/train_cadets/ --test_dir ../../data/test_cadets/
+
+cadets: prepare download_cadets run_cadets
+
 testCI:
 	cd output && touch test.txt
 
