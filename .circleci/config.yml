@@ -30,6 +30,7 @@ jobs:
       - run:
           name: eval-attack-wget-perf
           command: 'make eval_attack_wget'
+          no_output_timeout: 30m
       - deploy:
           name: Deploy
           command: |
