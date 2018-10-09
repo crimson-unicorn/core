@@ -70,6 +70,13 @@ run_wget:
 
 wget: prepare download_wget run_wget
 
+run_wget_subset:
+	cd build/graphchi-cpp && make run_wget_subset && make run_wget_baseline_attack && make run_wget_interval_attack
+	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_baseline/
+	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_interval/
+
+wget_subset: prepare download_wget run_wget_subset
+
 run_cadets:
 	cd build/parsers && make cadets_prepare && make cadets_train && make cadets_attack
 	cd build/graphchi-cpp && make run_cadets && make run_cadets_attack
