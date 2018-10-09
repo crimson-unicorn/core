@@ -28,11 +28,8 @@ jobs:
           name: python-packages
           command: 'pip install numpy scipy scikit-learn'
       - run:
-          name: prepare
-          command: 'make prepare'
-      - run:
           name: eval-benign-wget-perf
-          command: 'make testCI'
+          command: 'make eval_benign_wget'
       - deploy:
           name: Deploy
           command: |
