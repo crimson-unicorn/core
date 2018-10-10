@@ -1,5 +1,5 @@
 parsers-version=eval
-graphchi-version=eval
+graphchi-version=eval_async
 modeling-version=master
 number=0
 attack-type=baseline
