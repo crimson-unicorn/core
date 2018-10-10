@@ -18,6 +18,12 @@ prepare_modeling:
 prepare_output:
 	mkdir -p output
 
+prepare_libpvm:
+	mkdir -p build
+	git clone https://github.com/cadets/libpvm-rs.git
+	cd build/libpvm-rs && git submodule update --init
+	cd build/libpvm-rs/build && cmake .. && make
+
 prepare: prepare_parsers prepare_graphchi prepare_modeling prepare_output
 
 define dataverse_download
@@ -82,7 +88,7 @@ run_cadets:
 	cd build/graphchi-cpp && make run_cadets && make run_cadets_attack
 	cd build/modeling && python model.py --train_dir ../../data/train_cadets/ --test_dir ../../data/test_cadets/
 
-cadets: prepare download_cadets run_cadets
+cadets: prepare prepare_libpvm download_cadets run_cadets
 
 clean:
 	rm -rf build
