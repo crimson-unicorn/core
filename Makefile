@@ -45,7 +45,7 @@ download_streamspot:
 download_cadets:
 	mkdir -p data
 	$(call dataverse_download,10.7910/DVN/MPUCQU/GAMHTP)
-	$(call dataverse_download,10.7910/DVN/MPUCQU/D6SE4T)
+	$(call dataverse_download,10.7910/DVN/MPUCQU/BHQBB9)
 
 download_wget_long:
 	mkdir -p data
