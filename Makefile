@@ -92,9 +92,6 @@ run_cadets:
 
 cadets: prepare prepare_libpvm download_cadets run_cadets
 
-testCI:
-	cd output && touch test.txt
-
 clean:
 	rm -rf build
 	rm -rf data
