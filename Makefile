@@ -1,6 +1,6 @@
 parsers-version=eval
 graphchi-version=eval
-modeling-version=master
+modeling-version=eval
 number=0
 attack-type=baseline
 
@@ -40,6 +40,11 @@ download_wget:
 	$(call dataverse_download,10.7910/DVN/IA8UOS/1DBE7K)
 	$(call dataverse_download,10.7910/DVN/IA8UOS/34QRHK)
 
+download_wget_subset:
+	mkdir -p data
+	$(call dataverse_download,10.7910/DVN/IA8UOS/PJKEMZ)
+	$(call dataverse_download,10.7910/DVN/IA8UOS/RHTYM9)
+
 download_streamspot:
 	mkdir -p data
 	$(call dataverse_download,10.7910/DVN/83KYJY/JVJXX5)
@@ -72,6 +77,14 @@ run_wget:
 	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_interval/	
 
 wget: prepare download_wget run_wget
+
+run_wget_subset:
+	cd build/parsers && make wget_train_subset && make wget_baseline_attack_subset
+	cd build/graphchi-cpp && make run_wget_subset && make run_wget_baseline_attack_subset
+	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_baseline/
+	mv build/modeling/stats.csv output/stats-s-2000-h-3-w-450-i-3000.csv
+
+wget_subset: prepare download_wget_subset run_wget_subset
 
 run_single_benign_wget:
 	cd build/parsers && make number=$(number) single_wget_train

@@ -29,8 +29,8 @@ jobs:
           command: 'pip install numpy scipy scikit-learn'
       - run:
           name: evaluation
-          command: 'make eval_attack_wget'
-          no_output_timeout: 30m
+          command: 'make wget_subset'
+          no_output_timeout: 60m
       - deploy:
           name: Deploy
           command: |
