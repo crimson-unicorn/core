@@ -1,3 +1,5 @@
 build/*
 output/*
 data/*
+.vagrant
+.vagrant/*
