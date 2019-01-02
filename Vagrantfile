@@ -78,9 +78,10 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
-  config.vm.provision "shell", inline: <<-SHELL
+  config.vm.provision "shell", inline: <<-SHELL #, :privileged => false
     sudo yum -y update
     sudo yum -y upgrade
+    sudo yum -y install tmux
     sudo yum -y groupinstall "Development Tools"  # similar to "build-essential"
     sudo yum -y install libmpc-devel mpfr-devel gmp-devel
     sudo yum -y install ncurses-devel # Debian "libncurses-dev"
@@ -91,5 +92,6 @@ Vagrant.configure("2") do |config|
     pip install --upgrade pip
     pip install numpy scipy scikit-learn
     # not installed: clang g++-4.9 mosquitto sparse flawfinder
+
   SHELL
 end
