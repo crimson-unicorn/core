@@ -98,11 +98,14 @@ Vagrant.configure("2") do |config|
     mkdir build
     cd build
     git clone https://github.com/crimson-unicorn/graphchi-cpp
+    git clone https://github.com/crimson-unicorn/modeling
+    START=`date +%s`
     cd graphchi-cpp/ && make sdebug
     make run_toy
     cd ..
-    git clone https://github.com/crimson-unicorn/modeling
     cd modeling && python model.py --train_dir ../../data/train_toy/ --test_dir ../../data/test_toy/
+    END=`date +%s`
+    echo $((END-START))
     # clean up
     cd ../../data/
     rm -rf test_toy/
