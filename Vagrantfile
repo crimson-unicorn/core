@@ -93,5 +93,19 @@ Vagrant.configure("2") do |config|
     pip install numpy scipy scikit-learn
     # not installed: clang g++-4.9 mosquitto sparse flawfinder
 
+    # start the toy experiment
+    git clone https://github.com/crimson-unicorn/toy.git data
+    mkdir build
+    cd build
+    git clone https://github.com/crimson-unicorn/graphchi-cpp
+    cd graphchi-cpp/ && make sdebug
+    make run_toy
+    cd ..
+    git clone https://github.com/crimson-unicorn/modeling
+    cd modeling && python model.py --train_dir ../../data/train_toy/ --test_dir ../../data/test_toy/
+    # clean up
+    cd ../../data/
+    rm -rf test_toy/
+    rm -rf train_toy/
   SHELL
 end
