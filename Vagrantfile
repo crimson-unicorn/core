@@ -4,6 +4,8 @@
 # Require the AWS provider plugin
 require 'vagrant-aws'
 
+GITHUB_CRED = "https://" + ENV['MICHAEL_GITHUB_USERNAME'] + ":" + ENV['MICHAEL_GITHUB_PASSWORD'] + "@github.com"
+
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -64,6 +66,7 @@ Vagrant.configure("2") do |config|
     # Specify region, AMI ID, Instance, and security groups
     aws.region = 'eu-west-2'
     aws.ami = 'ami-0274e11dced17bb5b'
+    # aws.instance_type = 'c5.2xlarge'
     aws.instance_type = 't2.micro'
     aws.security_groups = ['michael-test-london']
 
@@ -95,6 +98,7 @@ Vagrant.configure("2") do |config|
 
     # start the toy experiment
     git clone https://github.com/crimson-unicorn/toy.git data
+    git clone https://github.com/crimson-unicorn/aws-output.git output
     mkdir build
     cd build
     git clone https://github.com/crimson-unicorn/graphchi-cpp
@@ -103,12 +107,21 @@ Vagrant.configure("2") do |config|
     cd graphchi-cpp/ && make sdebug
     make run_toy
     cd ..
-    cd modeling && python model.py --train_dir ../../data/train_toy/ --test_dir ../../data/test_toy/
+    cd modeling && python model.py --train_dir ../../data/train_toy/ --test_dir ../../data/test_toy/ > ../../output/output.txt
     END=`date +%s`
     echo $((END-START))
     # clean up
     cd ../../data/
     rm -rf test_toy/
     rm -rf train_toy/
+
+    # push to github
+    cd ../output
+    git config --global credential.helper 'store'
+    echo #{GITHUB_CRED} > ~/.git-credentials
+    git add .
+    git commit -m "AWS Computation Results of Toy Dataset."
+    git push
+    sudo shutdown now
   SHELL
 end
