@@ -84,7 +84,7 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
-  config.vm.provision "shell", inline: <<-SHELL #, :privileged => false
+  config.vm.provision "shell", inline: <<-SHELL, :privileged => false
     sudo yum -y update
     sudo yum -y upgrade
     # sudo yum -y install tmux
@@ -95,8 +95,8 @@ Vagrant.configure("2") do |config|
     sudo yum -y install zlib-devel  # Debian "libz-dev"
     sudo yum -y install cmake gcc wget git bc nano patch
     sudo yum -y install python-pip python-devel
-    pip install --upgrade pip
-    pip install numpy scipy scikit-learn
+    sudo pip install --upgrade pip
+    sudo pip install numpy scipy scikit-learn
     # not installed: clang g++-4.9 mosquitto sparse flawfinder
 
     curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | sudo bash
@@ -107,7 +107,8 @@ Vagrant.configure("2") do |config|
     eval "$(ssh-agent -s)"
     ssh-add ~/.ssh/aws_rsa
 
-    git clone git@github.com:crimson-unicorn/core.git
+    git clone https://github.com/crimson-unicorn/core.git
+    cd core && make download_cadets_e3 
 
     # start the toy experiment
     # git clone https://github.com/crimson-unicorn/toy.git data

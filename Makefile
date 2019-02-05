@@ -56,7 +56,7 @@ download_wget_long:
 
 download_cadets_e3:
 	mkdir -p data
-	cd data && git clone https://github.com/michael-hahn/cadets-e3.git
+	cd data && git clone git@github.com:michael-hahn/cadets-e3.git
 
 run_toy:
 	cd build/parsers && make toy
