@@ -66,15 +66,15 @@ Vagrant.configure("2") do |config|
     # Specify region, AMI ID, Instance, and security groups
     aws.region = 'eu-west-2'
     aws.ami = 'ami-0274e11dced17bb5b'
-    # aws.instance_type = 'c5.2xlarge'
-    aws.instance_type = 't2.micro'
+    aws.instance_type = 'c5.2xlarge'
+    # aws.instance_type = 't2.micro'
     # aws.instance_type = 'r5.2xlarge'
     # aws.instance_type = 'c5.4xlarge'
     # aws.instance_type = 'i3.2xlarge'
     aws.security_groups = ['michael-test-london']
 
     # increase disk size
-    aws.block_device_mapping = [{ 'DeviceName' => '/dev/sda1', 'Ebs.VolumeSize' => 50 }]
+    aws.block_device_mapping = [{ 'DeviceName' => '/dev/xvda', 'Ebs.VolumeSize' => 50 }]
 
     # Specify username and private key path
     override.ssh.username = 'ec2-user'
