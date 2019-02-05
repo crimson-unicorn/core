@@ -66,8 +66,8 @@ Vagrant.configure("2") do |config|
     # Specify region, AMI ID, Instance, and security groups
     aws.region = 'eu-west-2'
     aws.ami = 'ami-0274e11dced17bb5b'
-    # aws.instance_type = 'c5.2xlarge'
-    aws.instance_type = 't2.micro'
+    aws.instance_type = 'c5.2xlarge'
+    # aws.instance_type = 't2.micro'
     # aws.instance_type = 'r5.2xlarge'
     # aws.instance_type = 'c5.4xlarge'
     # aws.instance_type = 'i3.2xlarge'
@@ -96,7 +96,7 @@ Vagrant.configure("2") do |config|
     sudo yum -y install cmake gcc wget git bc nano patch
     sudo yum -y install python-pip python-devel
     sudo pip install --upgrade pip
-    sudo pip install numpy scipy scikit-learn
+    sudo pip install numpy scipy scikit-learn tqdm
     # not installed: clang g++-4.9 mosquitto sparse flawfinder
 
     curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | sudo bash
