@@ -68,6 +68,9 @@ Vagrant.configure("2") do |config|
     aws.ami = 'ami-0274e11dced17bb5b'
     # aws.instance_type = 'c5.2xlarge'
     aws.instance_type = 't2.micro'
+    # aws.instance_type = 'r5.2xlarge'
+    # aws.instance_type = 'c5.4xlarge'
+    # aws.instance_type = 'i3.2xlarge'
     aws.security_groups = ['michael-test-london']
 
     # Specify username and private key path
@@ -84,7 +87,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL #, :privileged => false
     sudo yum -y update
     sudo yum -y upgrade
-    sudo yum -y install tmux
+    # sudo yum -y install tmux
     sudo yum -y groupinstall "Development Tools"  # similar to "build-essential"
     sudo yum -y install libmpc-devel mpfr-devel gmp-devel
     sudo yum -y install ncurses-devel # Debian "libncurses-dev"
@@ -96,32 +99,42 @@ Vagrant.configure("2") do |config|
     pip install numpy scipy scikit-learn
     # not installed: clang g++-4.9 mosquitto sparse flawfinder
 
+    curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | sudo bash
+    sudo yum -y install git-lfs
+    git lfs install
+
+    mv /vagrant/aws_rsa ~/.ssh/
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/aws_rsa
+
+    git clone git@github.com:crimson-unicorn/core.git
+
     # start the toy experiment
-    git clone https://github.com/crimson-unicorn/toy.git data
-    git clone https://github.com/crimson-unicorn/aws-output.git output
-    mkdir build
-    cd build
-    git clone https://github.com/crimson-unicorn/graphchi-cpp
-    git clone https://github.com/crimson-unicorn/modeling
-    START=`date +%s`
-    cd graphchi-cpp/ && make sdebug
-    make run_toy
-    cd ..
-    cd modeling && python model.py --train_dir ../../data/train_toy/ --test_dir ../../data/test_toy/ > ../../output/output.txt
-    END=`date +%s`
-    echo $((END-START))
+    # git clone https://github.com/crimson-unicorn/toy.git data
+    # git clone https://github.com/crimson-unicorn/aws-output.git output
+    # mkdir build
+    # cd build
+    # git clone https://github.com/crimson-unicorn/graphchi-cpp
+    # git clone https://github.com/crimson-unicorn/modeling
+    # START=`date +%s`
+    # cd graphchi-cpp/ && make sdebug
+    # make run_toy
+    # cd ..
+    # cd modeling && python model.py --train_dir ../../data/train_toy/ --test_dir ../../data/test_toy/ > ../../output/output.txt
+    # END=`date +%s`
+    # echo $((END-START))
     # clean up
-    cd ../../data/
-    rm -rf test_toy/
-    rm -rf train_toy/
+    # cd ../../data/
+    # rm -rf test_toy/
+    # rm -rf train_toy/
 
     # push to github
-    cd ../output
-    git config --global credential.helper 'store'
-    echo #{GITHUB_CRED} > ~/.git-credentials
-    git add .
-    git commit -m "AWS Computation Results of Toy Dataset."
-    git push
-    sudo shutdown now
+    # cd ../output
+    # git config --global credential.helper 'store'
+    # echo #{GITHUB_CRED} > ~/.git-credentials
+    # git add .
+    # git commit -m "AWS Computation Results of Toy Dataset."
+    # git push
+    # sudo shutdown now
   SHELL
 end

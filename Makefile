@@ -54,6 +54,10 @@ download_wget_long:
 	$(call dataverse_download,10.7910/DVN/8GKEON/YKHWW4)
 	$(call dataverse_download,10.7910/DVN/8GKEON/AQLIIL)
 
+download_cadets_e3:
+	mkdir -p data
+	cd data && git clone https://github.com/michael-hahn/cadets-e3.git
+
 run_toy:
 	cd build/parsers && make toy
 	cd build/graphchi-cpp && make run_toy
