@@ -88,7 +88,7 @@ run_cadets:
 cadets: prepare prepare_libpvm download_cadets run_cadets
 
 run_cadets_e3:
-	cd data/cadets-e3 && mkdir -p egdelists_benign &&  mkdir -p egdelists_attack && mkdir -p train && mkdir -p test
+	cd data/cadets-e3 && mkdir -p edgelists_benign &&  mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
 	cd data/cadets-e3/train && mkdir -p base && mkdir -p stream
 	cd data/cadets-e3/test && mkdir -p base && mkdir -p stream
 	cd build/parsers/cdm && make cadets_e3
