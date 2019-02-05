@@ -87,6 +87,8 @@ run_cadets:
 
 cadets: prepare prepare_libpvm download_cadets run_cadets
 
+cadets_e3: prepare download_cadets_e3
+
 clean:
 	rm -rf build
 	rm -rf data

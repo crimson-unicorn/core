@@ -103,12 +103,14 @@ Vagrant.configure("2") do |config|
     sudo yum -y install git-lfs
     git lfs install
 
+    # Add SSH to be able to clone private GitHub repos
     mv /vagrant/aws_rsa ~/.ssh/
     eval "$(ssh-agent -s)"
     ssh-add ~/.ssh/aws_rsa
+    ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
     git clone https://github.com/crimson-unicorn/core.git
-    cd core && make download_cadets_e3 
+    cd core && make cadets_e3
 
     # start the toy experiment
     # git clone https://github.com/crimson-unicorn/toy.git data
