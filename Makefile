@@ -58,6 +58,10 @@ download_cadets_e3:
 	mkdir -p data
 	cd data && git clone git@github.com:michael-hahn/cadets-e3.git
 
+download_theia_e3:
+	mkdir -p data
+	cd data && git clone git@github.com:michael-hahn/theia-e3.git
+
 run_toy:
 	cd build/parsers && make toy
 	cd build/graphchi-cpp && make run_toy
@@ -96,6 +100,16 @@ run_cadets_e3:
 	cd build/modeling && python model.py --train_dir ../../data/cadets-e3/train_sketch/ --test_dir ../../data/cadets-e3/test_sketch/
 
 cadets_e3: prepare download_cadets_e3 run_cadets_e3
+
+run_theia_e3:
+	cd data/theia-e3 && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
+	cd data/theia-e3/train && mkdir -p base && mkdir -p stream
+	cd data/theia-e3/test && mkdir -p base && mkdir -p stream
+	cd build/parsers/cdm && make theia_e3
+	cd build/graphchi-cpp && make theia_e3
+	cd build/modeling && python model.py --train_dir ../../data/theia-e3/train_sketch/ --test_dir ../../data/theia-e3/test_sketch/
+
+theia_e3: prepare download_theia_e3 run_theia_e3
 
 clean:
 	rm -rf build

@@ -88,6 +88,13 @@ Vagrant.configure("2") do |config|
   #   apt-get install -y apache2
   # SHELL
   config.vm.provision "shell", inline: <<-SHELL, :privileged => false
+    # create xfs file system on SSD device /dev/nvme0n1
+    sudo mkfs -t xfs /dev/nvme0n1
+    sudo mkdir /data
+    sudo mount -t xfs /dev/nvme0n1 /data
+    cd /data
+    sudo chown -R ec2-user .
+
     sudo yum -y update
     sudo yum -y upgrade
     # sudo yum -y install tmux
@@ -113,7 +120,7 @@ Vagrant.configure("2") do |config|
     ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
     git clone https://github.com/crimson-unicorn/core.git
-    cd core && make cadets_e3
+    cd core && make theia_e3
 
     # start the toy experiment
     # git clone https://github.com/crimson-unicorn/toy.git data
