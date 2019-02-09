@@ -97,7 +97,7 @@ Vagrant.configure("2") do |config|
 
     sudo yum -y update
     sudo yum -y upgrade
-    # sudo yum -y install tmux
+    sudo yum -y install tmux
     sudo yum -y groupinstall "Development Tools"  # similar to "build-essential"
     sudo yum -y install libmpc-devel mpfr-devel gmp-devel
     sudo yum -y install ncurses-devel # Debian "libncurses-dev"
@@ -106,7 +106,8 @@ Vagrant.configure("2") do |config|
     sudo yum -y install cmake gcc wget git bc nano patch
     sudo yum -y install python-pip python-devel
     sudo pip install --upgrade pip
-    sudo pip install numpy scipy scikit-learn tqdm
+    sudo pip install numpy scipy scikit-learn
+    sudo pip install tqdm==4.29.1
     # not installed: clang g++-4.9 mosquitto sparse flawfinder
 
     curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | sudo bash
@@ -120,7 +121,7 @@ Vagrant.configure("2") do |config|
     ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
     git clone https://github.com/crimson-unicorn/core.git
-    cd core && make theia_e3
+    cd core && make cadets_e3
 
     # start the toy experiment
     # git clone https://github.com/crimson-unicorn/toy.git data
