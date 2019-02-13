@@ -70,7 +70,7 @@ Vagrant.configure("2") do |config|
     # aws.instance_type = 't2.micro'
     # aws.instance_type = 'r5.2xlarge'
     # aws.instance_type = 'c5.4xlarge'
-    aws.instance_type = 'i3.xlarge'
+    aws.instance_type = 'i3.4xlarge'
     aws.security_groups = ['michael-test-london']
 
     # increase disk size
@@ -89,9 +89,15 @@ Vagrant.configure("2") do |config|
   # SHELL
   config.vm.provision "shell", inline: <<-SHELL, :privileged => false
     # create xfs file system on SSD device /dev/nvme0n1
-    sudo mkfs -t xfs /dev/nvme0n1
+    # sudo mkfs -t xfs /dev/nvme0n1
+    # sudo mkdir /data
+    # sudo mount -t xfs /dev/nvme0n1 /data
+    # cd /data
+    # sudo chown -R ec2-user .
+
+    create tmpfs in memory
     sudo mkdir /data
-    sudo mount -t xfs /dev/nvme0n1 /data
+    sudo mount -t tmpfs -o size=100G tmpfs /data
     cd /data
     sudo chown -R ec2-user .
 
@@ -121,7 +127,9 @@ Vagrant.configure("2") do |config|
     ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
     git clone https://github.com/crimson-unicorn/core.git
-    cd core && make cadets_e3
+    cd core && make camflow_apt
+
+    # USE `vagrant scp` to transfer files between the guest and the host and vice versa
 
     # start the toy experiment
     # git clone https://github.com/crimson-unicorn/toy.git data

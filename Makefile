@@ -62,6 +62,10 @@ download_theia_e3:
 	mkdir -p data
 	cd data && git clone git@github.com:michael-hahn/theia-e3.git
 
+download_camflow_apt:
+	mkdir -p data
+	cd data && git clone git@github.com:michael-hahn/camflow-apt.git
+
 run_toy:
 	cd build/parsers && make toy
 	cd build/graphchi-cpp && make run_toy
@@ -110,6 +114,16 @@ run_theia_e3:
 	cd build/modeling && python model.py --train_dir ../../data/theia-e3/train_sketch/ --test_dir ../../data/theia-e3/test_sketch/
 
 theia_e3: prepare download_theia_e3 run_theia_e3
+
+run_camflow_apt:
+	cd data/camflow-apt && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
+	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
+	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
+	cd build/parsers/cdm && make camflow_apt
+	cd build/graphchi-cpp && make camflow_apt
+	cd build/modeling && python model.py --train_dir ../../data/camflow-apt/train_sketch/ --test_dir ../../data/camflow-apt/test_sketch/
+
+camflow_apt: prepare download_camflow_apt run_camflow_apt
 
 clean:
 	rm -rf build
