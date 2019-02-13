@@ -95,7 +95,7 @@ Vagrant.configure("2") do |config|
     # cd /data
     # sudo chown -R ec2-user .
 
-    create tmpfs in memory
+    # create tmpfs in memory
     sudo mkdir /data
     sudo mount -t tmpfs -o size=100G tmpfs /data
     cd /data
