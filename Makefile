@@ -1,5 +1,5 @@
 parsers-version=master
-graphchi-version=master
+graphchi-version=memory
 modeling-version=master
 
 prepare_parsers:
