@@ -70,7 +70,7 @@ Vagrant.configure("2") do |config|
     # aws.instance_type = 't2.micro'
     # aws.instance_type = 'r5.2xlarge'
     # aws.instance_type = 'c5.4xlarge'
-    aws.instance_type = 'i3.4xlarge'
+    aws.instance_type = 'i3.2xlarge'
     aws.security_groups = ['michael-test-london']
 
     # increase disk size
@@ -89,17 +89,17 @@ Vagrant.configure("2") do |config|
   # SHELL
   config.vm.provision "shell", inline: <<-SHELL, :privileged => false
     # create xfs file system on SSD device /dev/nvme0n1
-    # sudo mkfs -t xfs /dev/nvme0n1
-    # sudo mkdir /data
-    # sudo mount -t xfs /dev/nvme0n1 /data
-    # cd /data
-    # sudo chown -R ec2-user .
-
-    # create tmpfs in memory
+    sudo mkfs -t xfs /dev/nvme0n1
     sudo mkdir /data
-    sudo mount -t tmpfs -o size=100G tmpfs /data
+    sudo mount -t xfs /dev/nvme0n1 /data
     cd /data
     sudo chown -R ec2-user .
+
+    # create tmpfs in memory
+    # sudo mkdir /data
+    # sudo mount -t tmpfs -o size=100G tmpfs /data
+    # cd /data
+    # sudo chown -R ec2-user .
 
     sudo yum -y update
     sudo yum -y upgrade
@@ -157,6 +157,6 @@ Vagrant.configure("2") do |config|
     # git add .
     # git commit -m "AWS Computation Results of Toy Dataset."
     # git push
-    # sudo shutdown now
+    sudo shutdown now
   SHELL
 end

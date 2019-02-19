@@ -125,6 +125,71 @@ run_camflow_apt:
 
 camflow_apt: prepare download_camflow_apt run_camflow_apt
 
+define parse_camflow_interval
+	cd build/parsers/cdm && number=0 ; while [ $$number -le 124 ] ; do \
+		python ProvParser/provparser/up.py -v -m -S $(1) -i ../../../data/camflow-apt/edgelists_benign/camflow-benign.txt.$$number -b ../../../data/camflow-apt/train/base/base-camflow-benign-$$number.txt -s ../../../data/camflow-apt/train/stream/stream-camflow-benign-$$number.txt ; \
+		number=`expr $$number + 11` ; \
+	done
+	cd build/parsers/cdm && number=0 ; while [ $$number -le 24 ] ; do \
+		python ProvParser/provparser/up.py -v -m -S $(1) -i ../../../data/camflow-apt/edgelists_attack/camflow-attack.txt.$$number -b ../../../data/camflow-apt/test/base/base-camflow-attack-$$number.txt -s ../../../data/camflow-apt/test/stream/stream-camflow-attack-$$number.txt ; \
+		number=`expr $$number + 8` ; \
+	done
+endef
+
+define run_camflow_interval
+	cd data/camflow-apt && mkdir -p sketches
+	cd build/graphchi-cpp && number=0 ; while [ $$number -le 124 ] ; do \
+		bin/streaming/main filetype edgelist file ../../data/camflow-apt/train/base/base-camflow-benign-$$number.txt niters 100000 stream_file ../../data/camflow-apt/train/stream/stream-camflow-benign-$$number.txt decay 500 lambda 0.02 window 500 interval $(1) multiple 1 sketch_file ../../data/camflow-apt/sketches/sketch-benign-$$number.txt chunkify 1 chunk_size 5 ; \
+		rm -rf ../../data/camflow-apt/train/base/base-camflow-benign-$$number.txt.* ; \
+		rm -rf ../../data/camflow-apt/train/base/base-camflow-benign-$$number.txt_* ; \
+		number=`expr $$number + 11` ; \
+	done
+	cd build/graphchi-cpp && number=0 ; while [ $$number -le 24 ] ; do \
+		bin/streaming/main filetype edgelist file ../../data/camflow-apt/test/base/base-camflow-attack-$$number.txt niters 100000 stream_file ../../data/camflow-apt/test/stream/stream-camflow-attack-$$number.txt decay 500 lambda 0.02 window 500 interval $(1) multiple 1 sketch_file ../../data/camflow-apt/sketches/sketch-attack-$$number.txt chunkify 1 chunk_size 5 ; \
+		rm -rf ../../data/camflow-apt/test/base/base-camflow-attack-$$number.txt.* ; \
+		rm -rf ../../data/camflow-apt/test/base/base-camflow-attack-$$number.txt_* ; \
+		number=`expr $$number + 8` ; \
+	done
+endef
+
+define analyze_camflow_interval
+	cd build/modeling && number=0; while [ $$number -le 124 ] ; do \
+		python interval.py -n $(1) -i ../../data/camflow-apt/sketches/sketch-benign-$$number.txt >> summary.txt ; \
+		number=`expr $$number + 11` ; \
+	done
+	cd build/modeling && number=0; while [ $$number -le 24 ] ; do \
+		python interval.py -n $(1) -i ../../data/camflow-apt/sketches/sketch-attack-$$number.txt >> summary.txt ; \
+		number=`expr $$number + 8` ; \
+	done
+endef
+
+determine_camflow_interval:
+	cd data/camflow-apt && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
+	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
+	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
+
+	cd build/parsers/cdm && number=0 ; while [ $$number -le 15 ] ; do \
+		cd ../../../data/camflow-apt/benign && mkdir camflow-benign-$$number && tar zxvf camflow-benign-$$number.gz.tar -C camflow-benign-$$number && mv camflow-benign-$$number/camflow-benign.txt.* ../edgelists_benign ; \
+		cd ../../../data/camflow-apt/benign && rm -f camflow-benign-$$number.gz.tar && rm -rf camflow-benign-$$number ; \
+		number=`expr $$number + 1` ; \
+	done
+	cd build/parsers/cdm && number=0 ; while [ $$number -le 2 ] ; do \
+		cd ../../../data/camflow-apt/attack && mkdir camflow-attack-$$number && tar zxvf camflow-attack-$$number.gz.tar -C camflow-attack-$$number && mv camflow-attack-$$number/camflow-attack.txt.* ../edgelists_attack ; \
+		cd ../../../data/camflow-apt/attack && rm -f camflow-attack-$$number.gz.tar && rm -rf camflow-attack-$$number ; \
+		number=`expr $$number + 1` ; \
+	done
+	number=5000 ; while [ $$number -le 10000 ] ; do \
+		$(call parse_camflow_interval,$$number) ; \
+		$(call run_camflow_interval,$$number) ; \
+		cd data/camflow-apt/train/base && rm * ; \
+		cd data/camflow-apt/train/stream && rm * ; \
+		cd data/camflow-apt/test/base && rm * ; \
+		cd data/camflow-apt/test/stream && rm * ; \
+		$(call analyze_camflow_interval,$$number) ; \
+		cd data/camflow-apt/sketches && rm * ; \
+		number=`expr $$number + 1000` ; \
+	done
+
 clean:
 	rm -rf build
 	rm -rf data
