@@ -190,6 +190,8 @@ determine_camflow_interval:
 		number=`expr $$number + 1000` ; \
 	done
 
+camflow_apt_interval: prepare download_camflow_apt determine_camflow_interval
+
 clean:
 	rm -rf build
 	rm -rf data

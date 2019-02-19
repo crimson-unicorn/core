@@ -127,7 +127,7 @@ Vagrant.configure("2") do |config|
     ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
     git clone https://github.com/crimson-unicorn/core.git
-    cd core && make camflow_apt
+    cd core && make camflow_apt_interval
 
     # USE `vagrant scp` to transfer files between the guest and the host and vice versa
 
@@ -157,6 +157,6 @@ Vagrant.configure("2") do |config|
     # git add .
     # git commit -m "AWS Computation Results of Toy Dataset."
     # git push
-    sudo shutdown now
+    # sudo shutdown now
   SHELL
 end
