@@ -187,6 +187,7 @@ determine_camflow_interval:
 		cd ../stream && rm * ; \
 		$(call analyze_camflow_interval,$$itr) ; \
 		cd ../../data/camflow-apt/sketches && rm * ; \
+		cd ../../../ ; \
 		itr=`expr $$itr + 1000` ; \
 	done
 
