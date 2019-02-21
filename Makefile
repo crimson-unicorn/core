@@ -66,6 +66,14 @@ download_camflow_apt:
 	mkdir -p data
 	cd data && git clone git@github.com:michael-hahn/camflow-apt.git
 
+download_fivedirections_e3:
+	mkdir -p data
+	cd data && git clone git@github.com:michael-hahn/fivedirections-e3.git
+
+download_clearscope_e3:
+	mkdir -p data
+	cd data && git clone git@github.com:michael-hahn/clearscope-e3.git
+
 run_toy:
 	cd build/parsers && make toy
 	cd build/graphchi-cpp && make run_toy
@@ -124,6 +132,27 @@ run_camflow_apt:
 	cd build/modeling && python model.py --train_dir ../../data/camflow-apt/train_sketch/ --test_dir ../../data/camflow-apt/test_sketch/
 
 camflow_apt: prepare download_camflow_apt run_camflow_apt
+
+run_fivedirections_e3:
+	cd data/fivedirections-e3 && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
+	cd data/fivedirections-e3/train && mkdir -p base && mkdir -p stream
+	cd data/fivedirections-e3/test && mkdir -p base && mkdir -p stream
+	cd build/parsers/cdm && make fivedirections_e3
+	cd build/graphchi-cpp && make fivedirections_e3
+	cd build/modeling && python model.py --train_dir ../../data/fivedirections-e3/train_sketch/ --test_dir ../../data/fivedirections-e3/test_sketch/
+
+fivedirections_e3: prepare download_fivedirections_e3 run_fivedirections_e3
+
+run_clearscope_e3:
+	cd data/clearscope-e3 && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
+	cd data/clearscope-e3/train && mkdir -p base && mkdir -p stream
+	cd data/clearscope-e3/test && mkdir -p base && mkdir -p stream
+	cd build/parsers/cdm && make clearscope_e3
+	cd build/graphchi-cpp && make clearscope_e3
+	cd build/modeling && python model.py --train_dir ../../data/clearscope-e3/train_sketch/ --test_dir ../../data/clearscope-e3/test_sketch/
+
+clearscope_e3: prepare download_clearscope_e3 run_clearscope_e3
+
 
 define parse_camflow_interval
 	cd build/parsers/cdm && number=0 ; while [ $$number -le 124 ] ; do \
