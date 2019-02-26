@@ -1,5 +1,5 @@
 parsers-version=master
-graphchi-version=memory
+graphchi-version=eval_memory
 modeling-version=master
 
 prepare_parsers:
@@ -73,6 +73,10 @@ download_fivedirections_e3:
 download_clearscope_e3:
 	mkdir -p data
 	cd data && git clone git@github.com:michael-hahn/clearscope-e3.git
+
+download_camflow_apt_raw:
+	mkdir -p data
+	cd data && git clone git@github.com:michael-hahn/camflow-apt-raw.git
 
 run_toy:
 	cd build/parsers && make toy
@@ -221,6 +225,14 @@ determine_camflow_interval:
 	done
 
 camflow_apt_interval: prepare download_camflow_apt determine_camflow_interval
+
+run_camflow_apt_raw:
+	cd data/camflow-apt-raw && tar zxvf wget-normal-raw.gz.tar
+	cd build/parsers/camflow && python prepare.py -i ../../../data/camflow-apt-raw/wget-normal-1.log -o out.txt
+	cd build/parsers/camflow && python parse.py -s 2000 -b 2000 -i out.txt -B ../../../data/camflow-apt-raw/base.txt -S ../../../data/camflow-apt-raw/stream.txt
+	cd build/graphchi-cpp && make bin/streaming/main filetype edgelist file ../../data/camflow-apt-raw/base.txt niters 100000 stream_file ../../data/camflow-apt-raw/stream.txt decay 500 lambda 0.02 window 500 interval 2000 multiple 1 sketch_file ../../../data/camflow-apt-raw/sketch.txt chunkify 1 chunk_size 5
+
+eval_benign_camflow_apt: prepare download_camflow_apt_raw run_camflow_apt_raw
 
 clean:
 	rm -rf build
