@@ -74,6 +74,10 @@ download_clearscope_e3:
 	mkdir -p data
 	cd data && git clone git@github.com:michael-hahn/clearscope-e3.git
 
+download_spade_apt:
+	mkdir -p data
+	cd data && git clone git@github.com:michael-hahn/spade-wget-apt.git
+
 run_toy:
 	cd build/parsers && make toy
 	cd build/graphchi-cpp && make run_toy
@@ -153,6 +157,15 @@ run_clearscope_e3:
 
 clearscope_e3: prepare download_clearscope_e3 run_clearscope_e3
 
+run_spade_apt:
+	cd data/spade-wget-apt && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
+	cd data/spade-wget-apt/train && mkdir -p base && mkdir -p stream
+	cd data/spade-wget-apt/test && mkdir -p base && mkdir -p stream
+	cd build/parsers/cdm && make spade_apt
+	cd build/graphchi-cpp && make spade_apt
+	cd build/modeling && python model.py --train_dir ../../data/spade-wget-apt/train_sketch/ --test_dir ../../data/spade-wget-apt/test_sketch/
+
+spade_apt: prepare download_spade_apt run_spade_apt
 
 define parse_camflow_interval
 	cd build/parsers/cdm && number=0 ; while [ $$number -le 124 ] ; do \
