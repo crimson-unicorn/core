@@ -227,8 +227,8 @@ determine_camflow_interval:
 camflow_apt_interval: prepare download_camflow_apt determine_camflow_interval
 
 run_camflow_apt_raw:
-	cd data/camflow-apt-raw && tar zxvf wget-normal-raw.gz.tar
-	cd build/parsers/camflow && python prepare.py -i ../../../data/camflow-apt-raw/wget-normal-1.log -o out.txt
+	cd data/camflow-apt-raw && tar zxvf wget-normal-raw-0.gz.tar
+	cd build/parsers/camflow && python prepare.py -i ../../../data/camflow-apt-raw/wget-normal-raw-0.gz/normal-camflow-0.data -o out.txt
 	cd build/parsers/camflow && python parse.py -s 2000 -b 2000 -i out.txt -B ../../../data/camflow-apt-raw/base.txt -S ../../../data/camflow-apt-raw/stream.txt
 	cd build/graphchi-cpp && make bin/streaming/main filetype edgelist file ../../data/camflow-apt-raw/base.txt niters 100000 stream_file ../../data/camflow-apt-raw/stream.txt decay 500 lambda 0.02 window 500 interval 2000 multiple 1 sketch_file ../../../data/camflow-apt-raw/sketch.txt chunkify 1 chunk_size 5
 
