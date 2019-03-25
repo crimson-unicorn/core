@@ -179,7 +179,7 @@ run_camflow_shellshock:
 	cd build/graphchi-cpp && make camflow_shellshock
 	cd build/modeling && python model.py --train_dir ../../data/shellshock-apt/train_sketch/ --test_dir ../../data/shellshock-apt/test_sketch/
 
-camflow_apt: prepare download_camflow_shellshock run_camflow_shellshock
+camflow_shellshock: prepare download_camflow_shellshock run_camflow_shellshock
 
 define parse_camflow_interval
 	cd build/parsers/cdm && number=0 ; while [ $$number -le 124 ] ; do \
