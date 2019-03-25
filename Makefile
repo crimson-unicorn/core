@@ -78,6 +78,10 @@ download_spade_apt:
 	mkdir -p data
 	cd data && git clone git@github.com:michael-hahn/spade-wget-apt.git
 
+download_camflow_shellshock:
+	mkdir -p data
+	cd data && git clone git@github.com:michael-hahn/shellshock-apt.git
+
 run_toy:
 	cd build/parsers && make toy
 	cd build/graphchi-cpp && make run_toy
@@ -166,6 +170,16 @@ run_spade_apt:
 	cd build/modeling && python model.py --train_dir ../../data/spade-wget-apt/train_sketch/ --test_dir ../../data/spade-wget-apt/test_sketch/
 
 spade_apt: prepare download_spade_apt run_spade_apt
+
+run_camflow_shellshock:
+	cd data/shellshock-apt && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
+	cd data/shellshock-apt/train && mkdir -p base && mkdir -p stream
+	cd data/shellshock-apt/test && mkdir -p base && mkdir -p stream
+	cd build/parsers/cdm && make camflow_shellshock
+	cd build/graphchi-cpp && make camflow_shellshock
+	cd build/modeling && python model.py --train_dir ../../data/shellshock-apt/train_sketch/ --test_dir ../../data/shellshock-apt/test_sketch/
+
+camflow_apt: prepare download_camflow_shellshock run_camflow_shellshock
 
 define parse_camflow_interval
 	cd build/parsers/cdm && number=0 ; while [ $$number -le 124 ] ; do \
