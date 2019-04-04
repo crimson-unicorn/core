@@ -115,6 +115,11 @@ Vagrant.configure("2") do |config|
     sudo pip install numpy scipy scikit-learn
     sudo pip install tqdm==4.29.1
     # not installed: clang g++-4.9 mosquitto sparse flawfinder
+    # for opentuner
+    sudo yum -y install gnuplot
+    sudo yum -y install libfreetype6-devel
+    sudo yum -y install libpng-devel
+    sudo yum -y install sqlite sqlite-devel
 
     curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | sudo bash
     sudo yum -y install git-lfs
@@ -127,7 +132,7 @@ Vagrant.configure("2") do |config|
     ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
     git clone https://github.com/crimson-unicorn/core.git
-    cd core && make camflow_apt_interval
+    cd core && make camflow_apt_tune
 
     # USE `vagrant scp` to transfer files between the guest and the host and vice versa
 
