@@ -117,9 +117,10 @@ Vagrant.configure("2") do |config|
     # not installed: clang g++-4.9 mosquitto sparse flawfinder
     # for opentuner
     sudo yum -y install gnuplot
-    sudo yum -y install libfreetype6-devel
+    sudo yum -y install freetype-devel
     sudo yum -y install libpng-devel
     sudo yum -y install sqlite sqlite-devel
+    sudo pip install opentuner
 
     curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | sudo bash
     sudo yum -y install git-lfs
