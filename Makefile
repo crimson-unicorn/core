@@ -185,6 +185,8 @@ tune_camflow_apt:
 	cd data/camflow-apt && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
 	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
 	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
+	cd build/parsers/cdm && make tune_camflow_apt
+	cd build/modeling && python model_ot.py --base_folder_train ../../data/camflow-apt/train/base --stream_folder_train ../../data/camflow-apt/train/stream --base_folder_test ../../data/camflow-apt/test/base --stream_folder_test ../../data/camflow-apt/test/stream --sketch_folder_train ../../data/camflow-apt/train_sketch/ --sketch_folder_test ../../data/camflow-apt/test_sketch/
 
 camflow_apt_tune: prepare download_camflow_apt tune_camflow_apt
 
