@@ -181,6 +181,13 @@ run_camflow_shellshock:
 
 camflow_shellshock: prepare download_camflow_shellshock run_camflow_shellshock
 
+tune_camflow_apt:
+	cd data/camflow-apt && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
+	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
+	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
+
+camflow_apt_tune: prepare download_camflow_apt tune_camflow_apt
+
 define parse_camflow_interval
 	cd build/parsers/cdm && number=0 ; while [ $$number -le 124 ] ; do \
 		python ProvParser/provparser/up.py -v -m -S $(1) -i ../../../data/camflow-apt/edgelists_benign/camflow-benign.txt.$$number -b ../../../data/camflow-apt/train/base/base-camflow-benign-$$number.txt -s ../../../data/camflow-apt/train/stream/stream-camflow-benign-$$number.txt ; \
