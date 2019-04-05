@@ -70,7 +70,7 @@ Vagrant.configure("2") do |config|
     # aws.instance_type = 't2.micro'
     # aws.instance_type = 'r5.2xlarge'
     # aws.instance_type = 'c5.4xlarge'
-    aws.instance_type = 'i3.2xlarge'
+    aws.instance_type = 'i3.xlarge'
     aws.security_groups = ['michael-test-london']
 
     # increase disk size
@@ -87,13 +87,16 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
-  config.vm.provision "shell", inline: <<-SHELL, :privileged => false
+  config.vm.provision "shell", env: {"AWS_EMAIL_USER" => ENV['AWS_EMAIL_USER'], "AWS_EMAIL_PWD" => ENV['AWS_EMAIL_PWD']}, inline: <<-SHELL, :privileged => false
     # create xfs file system on SSD device /dev/nvme0n1
     sudo mkfs -t xfs /dev/nvme0n1
     sudo mkdir /data
     sudo mount -t xfs /dev/nvme0n1 /data
     cd /data
     sudo chown -R ec2-user .
+
+    echo "export AWS_EMAIL_USER=$AWS_EMAIL_USER" >>~/.bashrc
+    echo "export AWS_EMAIL_PWD=$AWS_EMAIL_PWD" >>~/.bashrc
 
     # create tmpfs in memory
     # sudo mkdir /data
@@ -111,6 +114,7 @@ Vagrant.configure("2") do |config|
     sudo yum -y install zlib-devel  # Debian "libz-dev"
     sudo yum -y install cmake gcc wget git bc nano patch
     sudo yum -y install python-pip python-devel
+    sudo yum -y install python3
     sudo pip install --upgrade pip
     sudo pip install numpy scipy scikit-learn
     sudo pip install tqdm==4.29.1
@@ -126,14 +130,14 @@ Vagrant.configure("2") do |config|
     sudo yum -y install git-lfs
     git lfs install
 
-    # Add SSH to be able to clone private GitHub repos
+    # # Add SSH to be able to clone private GitHub repos
     mv /vagrant/aws_rsa ~/.ssh/
     eval "$(ssh-agent -s)"
     ssh-add ~/.ssh/aws_rsa
     ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
     git clone https://github.com/crimson-unicorn/core.git
-    cd core && make camflow_apt_tune
+    cd core && make camflow_apt_interval_tune
 
     # USE `vagrant scp` to transfer files between the guest and the host and vice versa
 
