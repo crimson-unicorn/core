@@ -186,7 +186,7 @@ tune_camflow_apt:
 	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
 	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
 	cd build/parsers/cdm && make tune_camflow_apt
-	cd build/modeling && GRAPHCHI_ROOT=../graphchi-cpp/ python model_ot.py --test-limit 10 --base_folder_train ../../data/camflow-apt/train/base --stream_folder_train ../../data/camflow-apt/train/stream --base_folder_test ../../data/camflow-apt/test/base --stream_folder_test ../../data/camflow-apt/test/stream --sketch_folder_train ../../data/camflow-apt/train_sketch/ --sketch_folder_test ../../data/camflow-apt/test_sketch/ > ot.txt
+	cd build/modeling && GRAPHCHI_ROOT=../graphchi-cpp/ python model_ot.py --technique RegularStepSearch --test-limit 10 --base_folder_train ../../data/camflow-apt/train/base --stream_folder_train ../../data/camflow-apt/train/stream --base_folder_test ../../data/camflow-apt/test/base --stream_folder_test ../../data/camflow-apt/test/stream --sketch_folder_train ../../data/camflow-apt/train_sketch/ --sketch_folder_test ../../data/camflow-apt/test_sketch/ > ot.txt
 
 camflow_apt_tune: prepare download_camflow_apt tune_camflow_apt
 
