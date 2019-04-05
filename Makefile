@@ -186,7 +186,7 @@ tune_camflow_apt_interval:
 	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
 	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
 	cd build/parsers/cdm && make tune_camflow_apt
-	cd build/modeling && GRAPHCHI_ROOT=../graphchi-cpp/ python model_ot.py --technique RegularStepSearch --test-limit 10 --base_folder_train ../../data/camflow-apt/train/base --stream_folder_train ../../data/camflow-apt/train/stream --base_folder_test ../../data/camflow-apt/test/base --stream_folder_test ../../data/camflow-apt/test/stream --sketch_folder_train ../../data/camflow-apt/train_sketch/ --sketch_folder_test ../../data/camflow-apt/test_sketch/ --sketch_size --k_hops --chunk_size --lambda_param | tee ot_interval.txt
+	cd build/modeling && GRAPHCHI_ROOT=../graphchi-cpp/ python model_ot.py --technique RegularStepSearch --test-limit 10 --base_folder_train ../../data/camflow-apt/train/base --stream_folder_train ../../data/camflow-apt/train/stream --base_folder_test ../../data/camflow-apt/test/base --stream_folder_test ../../data/camflow-apt/test/stream --sketch_folder_train ../../data/camflow-apt/train_sketch/ --sketch_folder_test ../../data/camflow-apt/test_sketch/ --sketch_size --k_hops --chunk_size --lambda_param > ot_interval.txt
 	python3 send_email.py -e "Tuning INTERVAL" build/modeling/ot_interval.txt
 
 camflow_apt_interval_tune: prepare download_camflow_apt tune_camflow_apt_interval
@@ -196,7 +196,7 @@ tune_camflow_apt_sketch_size:
 	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
 	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
 	cd build/parsers/cdm && make tune_camflow_apt
-	cd build/modeling && GRAPHCHI_ROOT=../graphchi-cpp/ python model_ot.py --technique RegularStepSearch --test-limit 10 --base_folder_train ../../data/camflow-apt/train/base --stream_folder_train ../../data/camflow-apt/train/stream --base_folder_test ../../data/camflow-apt/test/base --stream_folder_test ../../data/camflow-apt/test/stream --sketch_folder_train ../../data/camflow-apt/train_sketch/ --sketch_folder_test ../../data/camflow-apt/test_sketch/ --interval --k_hops --chunk_size --lambda_param | tee ot_sketch_size.txt
+	cd build/modeling && GRAPHCHI_ROOT=../graphchi-cpp/ python model_ot.py --technique RegularStepSearch --test-limit 10 --base_folder_train ../../data/camflow-apt/train/base --stream_folder_train ../../data/camflow-apt/train/stream --base_folder_test ../../data/camflow-apt/test/base --stream_folder_test ../../data/camflow-apt/test/stream --sketch_folder_train ../../data/camflow-apt/train_sketch/ --sketch_folder_test ../../data/camflow-apt/test_sketch/ --interval --k_hops --chunk_size --lambda_param > ot_sketch_size.txt
 	python3 send_email.py -e "Tuning SKETCH SIZE" build/modeling/ot_sketch_size.txt
 
 camflow_apt_sketch_size_tune: prepare download_camflow_apt tune_camflow_apt_sketch_size
@@ -206,7 +206,7 @@ tune_camflow_apt_k_hops:
 	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
 	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
 	cd build/parsers/cdm && make tune_camflow_apt
-	cd build/modeling && GRAPHCHI_ROOT=../graphchi-cpp/ python model_ot.py --technique RegularStepSearch --test-limit 4 --base_folder_train ../../data/camflow-apt/train/base --stream_folder_train ../../data/camflow-apt/train/stream --base_folder_test ../../data/camflow-apt/test/base --stream_folder_test ../../data/camflow-apt/test/stream --sketch_folder_train ../../data/camflow-apt/train_sketch/ --sketch_folder_test ../../data/camflow-apt/test_sketch/ --sketch_size --interval --chunk_size --lambda_param | tee ot_k_hops.txt
+	cd build/modeling && GRAPHCHI_ROOT=../graphchi-cpp/ python model_ot.py --technique RegularStepSearch --test-limit 4 --base_folder_train ../../data/camflow-apt/train/base --stream_folder_train ../../data/camflow-apt/train/stream --base_folder_test ../../data/camflow-apt/test/base --stream_folder_test ../../data/camflow-apt/test/stream --sketch_folder_train ../../data/camflow-apt/train_sketch/ --sketch_folder_test ../../data/camflow-apt/test_sketch/ --sketch_size --interval --chunk_size --lambda_param > ot_k_hops.txt
 	python3 send_email.py -e "Tuning K HOPS" build/modeling/ot_k_hops.txt
 
 camflow_apt_k_hops_tune: prepare download_camflow_apt tune_camflow_apt_k_hops
@@ -216,7 +216,7 @@ tune_camflow_apt_chunk_size:
 	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
 	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
 	cd build/parsers/cdm && make tune_camflow_apt
-	cd build/modeling && GRAPHCHI_ROOT=../graphchi-cpp/ python model_ot.py --technique RegularStepSearch --test-limit 10 --base_folder_train ../../data/camflow-apt/train/base --stream_folder_train ../../data/camflow-apt/train/stream --base_folder_test ../../data/camflow-apt/test/base --stream_folder_test ../../data/camflow-apt/test/stream --sketch_folder_train ../../data/camflow-apt/train_sketch/ --sketch_folder_test ../../data/camflow-apt/test_sketch/ --sketch_size --interval --k_hops --lambda_param | tee ot_chunk_size.txt
+	cd build/modeling && GRAPHCHI_ROOT=../graphchi-cpp/ python model_ot.py --technique RegularStepSearch --test-limit 10 --base_folder_train ../../data/camflow-apt/train/base --stream_folder_train ../../data/camflow-apt/train/stream --base_folder_test ../../data/camflow-apt/test/base --stream_folder_test ../../data/camflow-apt/test/stream --sketch_folder_train ../../data/camflow-apt/train_sketch/ --sketch_folder_test ../../data/camflow-apt/test_sketch/ --sketch_size --interval --k_hops --lambda_param > ot_chunk_size.txt
 	python3 send_email.py -e "Tuning CHUNK SIZE" build/modeling/ot_chunk_size.txt
 
 camflow_apt_chunk_size_tune: prepare download_camflow_apt tune_camflow_apt_chunk_size
@@ -226,7 +226,7 @@ tune_camflow_apt_lambda_param:
 	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
 	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
 	cd build/parsers/cdm && make tune_camflow_apt
-	cd build/modeling && GRAPHCHI_ROOT=../graphchi-cpp/ python model_ot.py --technique RegularStepSearch --test-limit 10 --base_folder_train ../../data/camflow-apt/train/base --stream_folder_train ../../data/camflow-apt/train/stream --base_folder_test ../../data/camflow-apt/test/base --stream_folder_test ../../data/camflow-apt/test/stream --sketch_folder_train ../../data/camflow-apt/train_sketch/ --sketch_folder_test ../../data/camflow-apt/test_sketch/ --sketch_size --k_hops --chunk_size --interval | tee ot_lambda_param.txt
+	cd build/modeling && GRAPHCHI_ROOT=../graphchi-cpp/ python model_ot.py --technique RegularStepSearch --test-limit 10 --base_folder_train ../../data/camflow-apt/train/base --stream_folder_train ../../data/camflow-apt/train/stream --base_folder_test ../../data/camflow-apt/test/base --stream_folder_test ../../data/camflow-apt/test/stream --sketch_folder_train ../../data/camflow-apt/train_sketch/ --sketch_folder_test ../../data/camflow-apt/test_sketch/ --sketch_size --k_hops --chunk_size --interval > ot_lambda_param.txt
 	python3 send_email.py -e "Tuning LAMBDA" build/modeling/ot_lambda_param.txt
 
 camflow_apt_lambda_param_tune: prepare download_camflow_apt tune_camflow_apt_lambda_param
