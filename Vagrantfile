@@ -125,6 +125,8 @@ Vagrant.configure("2") do |config|
     sudo yum -y install libpng-devel
     sudo yum -y install sqlite sqlite-devel
     sudo pip install opentuner
+    # need to downgrade sqlalchemy for OpenTuner to work correctly
+    sudo pip install --upgrade sqlalchemy==1.0.13
 
     curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | sudo bash
     sudo yum -y install git-lfs
