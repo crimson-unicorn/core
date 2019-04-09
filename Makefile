@@ -108,7 +108,7 @@ run_wget_2:
 	cd data && mkdir -p train && mkdir -p test
 	cd data/train && mkdir -p base && mkdir -p stream
 	mv data/benign/base/* data/train/base
-	mv data/benign/stream/* data/train/strea,
+	mv data/benign/stream/* data/train/stream
 	cd data/test && mkdir -p base && mkdir -p stream
 	mv data/attack_baseline/base/* data/test/base
 	mv data/attack_interval/base/* data/test/base

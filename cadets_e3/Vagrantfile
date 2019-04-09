@@ -139,7 +139,8 @@ Vagrant.configure("2") do |config|
     ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
     git clone https://github.com/crimson-unicorn/core.git
-    cd core && make camflow_apt_sketch_size_tune
+    # cd core && make camflow_apt_sketch_size_tune
+    cd core && make wget_2
 
     # USE `vagrant scp` to transfer files between the guest and the host and vice versa
 
