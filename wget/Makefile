@@ -104,21 +104,6 @@ run_wget:
 
 wget: prepare download_wget run_wget
 
-run_wget_2:
-	cd data && mkdir -p train && mkdir -p test
-	cd data/train && mkdir -p base && mkdir -p stream
-	mv data/benign/base/* data/train/base
-	mv data/benign/stream/* data/train/strea,
-	cd data/test && mkdir -p base && mkdir -p stream
-	mv data/attack_baseline/base/* data/test/base
-	mv data/attack_interval/base/* data/test/base
-	mv data/attack_baseline/stream/* data/test/stream
-	mv data/attack_interval/stream/* data/test/stream
-	cd build/graphchi-cpp && make run_wget_2 && make run_wget_attack_baseline_2 && make run_wget_attack_interval_2
-	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget/
-
-wget_2: prepare download_wget run_wget_2
-
 run_cadets:
 	cd build/parsers && make cadets_prepare && make cadets_train && make cadets_attack
 	cd build/graphchi-cpp && make run_cadets && make run_cadets_attack
