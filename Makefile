@@ -26,6 +26,18 @@ prepare_libpvm:
 
 prepare: prepare_parsers prepare_graphchi prepare_modeling prepare_output
 
+prepare_graphchi_1_0:
+	mkdir -p build
+	cd build && git clone --single-branch -b v1.0 https://github.com/crimson-unicorn/graphchi-cpp
+	cd build/graphchi-cpp && make sdebug
+
+prepare_modeling_1_0:
+	mkdir -p build
+	cd build && git clone -b $(modeling-version)  https://github.com/crimson-unicorn/modeling
+	cd build/modeling && git checkout badb3d25c60bea30abdac5053419d324d2631e31
+
+prepare_1_0: prepare_parsers prepare_graphchi_1_0 prepare_modeling_1_0 prepare_output
+
 define dataverse_download
 	wget --retry-connrefused --waitretry=5 --read-timeout=30 --tries=50 --no-dns-cache https://dataverse.harvard.edu/api/access/datafile/:persistentId?persistentId=doi:$(1) -O data/tmp.tar.gz
 	cd data && tar -xzf tmp.tar.gz
