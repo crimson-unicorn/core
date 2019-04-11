@@ -29,4 +29,4 @@ jobs:
           command: 'pip install numpy scipy scikit-learn'
       - run:
           name: wget
-          command: 'make wget'
+          command: 'make wget_subset_hotfix'
