@@ -108,13 +108,21 @@ run_streamspot:
 
 streamspot: prepare download_streamspot run_streamspot
 
-run_wget:
+parse_wget_1_0:
 	cd build/parsers && make wget_train && make wget_baseline_attack && make wget_interval_attack
+
+run_wget:
 	cd build/graphchi-cpp && make run_wget && make run_wget_baseline_attack && make run_wget_interval_attack
 	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_baseline/
 	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_interval/
 
-wget: prepare download_wget run_wget
+wget: prepare_1_0 download_wget run_wget
+
+run_wget_subset:
+	cd build/graphchi-cpp && make run_wget_subset && make run_wget_baseline_attack_subset
+	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_baseline/
+
+wget_subset: prepare_1_0 download_wget run_wget_subset
 
 run_wget_2:
 	cd data && mkdir -p train && mkdir -p test
