@@ -129,6 +129,7 @@ wget: prepare_1_0 download_wget run_wget
 run_wget_subset:
 	cd build/graphchi-cpp && make run_wget_subset && make run_wget_baseline_attack_subset
 	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_baseline/ > results.txt
+	mv build/modeling/results.txt output/
 
 wget_subset: prepare_1_0 download_wget run_wget_subset
 
