@@ -121,10 +121,14 @@ parse_wget_1_0:
 
 run_wget:
 	cd build/graphchi-cpp && make run_wget && make run_wget_baseline_attack && make run_wget_interval_attack
-	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_baseline/
-	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_interval/
+	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_baseline/ > results-baseline.txt
+	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_interval/ > results-interval.txt
+	mv build/modeling/results-baseline.txt output/
+	mv build/modeling/results-interval.txt output/
 
 wget: prepare_1_0 download_wget run_wget
+
+wget_hotfix: prepare_hotfix download_wget run_wget
 
 run_wget_subset:
 	cd build/graphchi-cpp && make run_wget_subset && make run_wget_baseline_attack_subset
