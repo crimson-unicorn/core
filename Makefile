@@ -1,6 +1,7 @@
 parsers-version=master
 graphchi-version=memory
 modeling-version=master
+graphchi-hotfix=incremental
 
 prepare_parsers:
 	mkdir -p build
@@ -31,12 +32,19 @@ prepare_graphchi_1_0:
 	cd build && git clone --single-branch -b v1.0 https://github.com/crimson-unicorn/graphchi-cpp
 	cd build/graphchi-cpp && make sdebug
 
+prepare_graphchi_hotfix:
+	mkdir -p build
+	cd build && git clone --single-branch -b $(graphchi-hotfix) https://github.com/crimson-unicorn/graphchi-cpp
+	cd build/graphchi-cpp && make sdebug
+
 prepare_modeling_1_0:
 	mkdir -p build
 	cd build && git clone -b $(modeling-version)  https://github.com/crimson-unicorn/modeling
 	cd build/modeling && git checkout badb3d25c60bea30abdac5053419d324d2631e31
 
 prepare_1_0: prepare_parsers prepare_graphchi_1_0 prepare_modeling_1_0 prepare_output
+
+prepare_hotfix: prepare_parsers prepare_graphchi_hotfix prepare_modeling_1_0 prepare_output
 
 define dataverse_download
 	wget --retry-connrefused --waitretry=5 --read-timeout=30 --tries=50 --no-dns-cache https://dataverse.harvard.edu/api/access/datafile/:persistentId?persistentId=doi:$(1) -O data/tmp.tar.gz
@@ -120,9 +128,11 @@ wget: prepare_1_0 download_wget run_wget
 
 run_wget_subset:
 	cd build/graphchi-cpp && make run_wget_subset && make run_wget_baseline_attack_subset
-	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_baseline/
+	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_baseline/ > results.txt
 
 wget_subset: prepare_1_0 download_wget run_wget_subset
+
+wget_subset_hotfix: prepare_hotfix download_wget run_wget_subset
 
 run_wget_2:
 	cd data && mkdir -p train && mkdir -p test
