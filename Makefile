@@ -2,6 +2,7 @@ parsers-version=master
 graphchi-version=memory
 modeling-version=master
 graphchi-hotfix=incremental
+modeling-hotfix=incremental
 
 prepare_parsers:
 	mkdir -p build
@@ -42,9 +43,13 @@ prepare_modeling_1_0:
 	cd build && git clone -b $(modeling-version)  https://github.com/crimson-unicorn/modeling
 	cd build/modeling && git checkout badb3d25c60bea30abdac5053419d324d2631e31
 
+prepare_modeling_hotfix:
+	mkdir -p build
+	cd build && git clone -b $(modeling-hotfix)  https://github.com/crimson-unicorn/modeling
+
 prepare_1_0: prepare_parsers prepare_graphchi_1_0 prepare_modeling_1_0 prepare_output
 
-prepare_hotfix: prepare_parsers prepare_graphchi_hotfix prepare_modeling_1_0 prepare_output
+prepare_hotfix: prepare_parsers prepare_graphchi_hotfix prepare_modeling_hotfix prepare_output
 
 define dataverse_download
 	wget --retry-connrefused --waitretry=5 --read-timeout=30 --tries=50 --no-dns-cache https://dataverse.harvard.edu/api/access/datafile/:persistentId?persistentId=doi:$(1) -O data/tmp.tar.gz
