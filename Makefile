@@ -139,6 +139,13 @@ wget_subset: prepare_1_0 download_wget run_wget_subset
 
 wget_subset_hotfix: prepare_hotfix download_wget run_wget_subset
 
+run_wget_subset_CV:
+	cd build/graphchi-cpp && make run_wget_subset && make run_wget_baseline_attack_subset_CV
+	cd build/modeling && python model.py --train_dir ../../data/train_wget/ --test_dir ../../data/test_wget_baseline/ > results.txt
+	mv build/modeling/results.txt output/
+
+wget_subset_hotfix_CV: prepare_parsers prepare_graphchi_hotfix prepare_modeling prepare_output download_wget run_wget_subset
+
 run_wget_2:
 	cd data && mkdir -p train && mkdir -p test
 	cd data/train && mkdir -p base && mkdir -p stream
