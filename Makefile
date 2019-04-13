@@ -89,7 +89,7 @@ download_theia_e3:
 
 download_camflow_apt:
 	mkdir -p data
-	cd data && git clone git@github.com:michael-hahn/camflow-apt.git
+	cd data && git clone git@github.com:michael-hahn/camflow-apt-new-label.git
 
 download_fivedirections_e3:
 	mkdir -p data
