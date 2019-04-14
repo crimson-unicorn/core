@@ -105,7 +105,7 @@ download_spade_apt:
 
 download_camflow_shellshock:
 	mkdir -p data
-	cd data && git clone git@github.com:michael-hahn/shellshock-apt.git
+	cd data && git clone git@github.com:michael-hahn/shellshock-apt-new-label.git shellshock-apt
 
 run_toy:
 	cd build/parsers && make toy
