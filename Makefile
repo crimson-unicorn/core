@@ -275,7 +275,7 @@ tune_camflow_apt_sketch_size:
 
 camflow_apt_sketch_size_tune: prepare download_camflow_apt tune_camflow_apt_sketch_size
 
-camflow_apt_sketch_size_hotfix_CV: prepare_parsers prepare_graphchi_hotfix prepare_modeling prepare_output download_camflow_apt tune_camflow_apt_sketch_size
+camflow_apt_sketch_size_tune_hotfix_CV: prepare_parsers prepare_graphchi_hotfix prepare_modeling prepare_output download_camflow_apt tune_camflow_apt_sketch_size
 
 tune_camflow_apt_k_hops:
 	cd data/camflow-apt && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test && mkdir -p train_sketch && mkdir -p test_sketch
