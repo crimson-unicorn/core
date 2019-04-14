@@ -270,7 +270,7 @@ tune_camflow_apt_sketch_size:
 	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
 	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
 	cd build/parsers/cdm && make tune_camflow_apt
-	cd build/modeling && GRAPHCHI_ROOT=../graphchi-cpp/ python model_ot.py --technique RegularStepSearch --test-limit 10 --base_folder_train ../../data/camflow-apt/train/base --stream_folder_train ../../data/camflow-apt/train/stream --base_folder_test ../../data/camflow-apt/test/base --stream_folder_test ../../data/camflow-apt/test/stream --sketch_folder_train ../../data/camflow-apt/train_sketch/ --sketch_folder_test ../../data/camflow-apt/test_sketch/ --interval --k_hops --chunk_size --lambda_param > ot_sketch_size.txt
+	cd build/modeling && GRAPHCHI_ROOT=../graphchi-cpp/ python model_ot.py --technique RegularStepSearch --test-limit 10 --base_folder_train ../../data/camflow-apt/train/base --stream_folder_train ../../data/camflow-apt/train/stream --base_folder_test ../../data/camflow-apt/test/base --stream_folder_test ../../data/camflow-apt/test/stream --sketch_folder_train ../../data/camflow-apt/train_sketch/ --sketch_folder_test ../../data/camflow-apt/test_sketch/ --window --interval --k_hops --chunk_size --lambda_param > ot_sketch_size.txt
 	python3 send_email.py -e "Tuning SKETCH SIZE" build/modeling/ot_sketch_size.txt
 
 camflow_apt_sketch_size_tune: prepare download_camflow_apt tune_camflow_apt_sketch_size
