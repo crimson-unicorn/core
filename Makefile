@@ -3,6 +3,7 @@ graphchi-version=memory
 modeling-version=master
 graphchi-hotfix=incremental
 modeling-hotfix=incremental
+graphchi-eval=eval_incremental
 
 prepare_parsers:
 	mkdir -p build
@@ -50,6 +51,11 @@ prepare_modeling_hotfix:
 prepare_1_0: prepare_parsers prepare_graphchi_1_0 prepare_modeling_1_0 prepare_output
 
 prepare_hotfix: prepare_parsers prepare_graphchi_hotfix prepare_modeling_hotfix prepare_output
+
+prepare_graphchi_eval:
+	mkdir -p build
+	cd build && git clone --single-branch -b $(graphchi-eval) https://github.com/crimson-unicorn/graphchi-cpp
+	cd build/graphchi-cpp && make sdebug
 
 define dataverse_download
 	wget --retry-connrefused --waitretry=5 --read-timeout=30 --tries=50 --no-dns-cache https://dataverse.harvard.edu/api/access/datafile/:persistentId?persistentId=doi:$(1) -O data/tmp.tar.gz
@@ -214,6 +220,9 @@ run_camflow_apt_subset:
 	cd build/modeling && python model.py --train_dir ../../data/camflow-apt/train_sketch/ --test_dir ../../data/camflow-apt/test_sketch/ > results.txt
 
 camflow_apt_subset_hotfix_CV: prepare_parsers prepare_graphchi_hotfix prepare_modeling prepare_output download_camflow_apt run_camflow_apt_subset
+
+eval_camflow_apt:
+	cd build/graphchi-cpp && make eval_camflow_apt
 
 run_fivedirections_e3:
 	cd data/fivedirections-e3 && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
