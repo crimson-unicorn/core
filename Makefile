@@ -221,9 +221,11 @@ run_fivedirections_e3:
 	cd data/fivedirections-e3/test && mkdir -p base && mkdir -p stream
 	cd build/parsers/cdm && make fivedirections_e3
 	cd build/graphchi-cpp && make fivedirections_e3
-	cd build/modeling && python model.py --train_dir ../../data/fivedirections-e3/train_sketch/ --test_dir ../../data/fivedirections-e3/test_sketch/
+	cd build/modeling && python model.py --train_dir ../../data/fivedirections-e3/train_sketch/ --test_dir ../../data/fivedirections-e3/test_sketch/ > results.txt
 
 fivedirections_e3: prepare download_fivedirections_e3 run_fivedirections_e3
+
+fivedirections_e3_hotfix_CV: prepare_parsers prepare_graphchi_hotfix prepare_modeling prepare_output download_fivedirections_e3 run_fivedirections_e3
 
 run_clearscope_e3:
 	cd data/clearscope-e3 && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
