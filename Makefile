@@ -251,9 +251,11 @@ run_camflow_shellshock:
 	cd data/shellshock-apt/test && mkdir -p base && mkdir -p stream
 	cd build/parsers/cdm && make camflow_shellshock
 	cd build/graphchi-cpp && make camflow_shellshock
-	cd build/modeling && python model.py --train_dir ../../data/shellshock-apt/train_sketch/ --test_dir ../../data/shellshock-apt/test_sketch/
+	cd build/modeling && python model.py --train_dir ../../data/shellshock-apt/train_sketch/ --test_dir ../../data/shellshock-apt/test_sketch/ > results.txt
 
 camflow_shellshock: prepare download_camflow_shellshock run_camflow_shellshock
+
+camflow_shellshock_hotfix_CV: prepare_parsers prepare_graphchi_hotfix prepare_modeling prepare_output download_camflow_shellshock run_camflow_shellshock
 
 run_camflow_shellshock_subset:
 	cd data/shellshock-apt && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
