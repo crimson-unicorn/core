@@ -225,14 +225,31 @@ run_camflow_apt_subset:
 
 camflow_apt_subset_hotfix_CV: prepare_parsers prepare_graphchi_hotfix prepare_modeling prepare_output download_camflow_apt run_camflow_apt_subset
 
-eval_camflow_apt:
+eval_camflow_apt_window:
 	cd data/camflow-apt && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
 	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
 	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
-	cd build/parsers/camflow && make eval_camflow_apt WINDOW=3000 INTERVAL=6000
-	cd build/graphchi-cpp && make eval_camflow_apt WINDOW=3000 INTERVAL=6000
+	cd build/parsers/camflow && make eval_camflow_apt_prepare
+	window=500 ; while [ $$window -le 5500 ] ; do \
+		cd build/parsers/camflow && make eval_camflow_apt WINDOW=$$window INTERVAL=6000 ; \
+		cd build/graphchi-cpp && make eval_camflow_apt WINDOW=$$window INTERVAL=6000 ; \
+		number=`expr $$number + 500` ; \
+	done
 
-camflow_apt_eval: prepare_parsers prepare_graphchi_eval prepare_output download_camflow_apt_raw eval_camflow_apt
+camflow_apt_window_eval: prepare_parsers prepare_graphchi_eval prepare_output download_camflow_apt_raw eval_camflow_apt_window
+
+eval_camflow_apt_interval:
+	cd data/camflow-apt && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
+	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
+	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
+	cd build/parsers/camflow && make eval_camflow_apt_prepare
+	interval=1000 ; while [ $$window -le 10000 ] ; do \
+		cd build/parsers/camflow && make eval_camflow_apt WINDOW=3000 INTERVAL=$$interval ; \
+		cd build/graphchi-cpp && make eval_camflow_apt WINDOW=3000 INTERVAL=$$interval ; \
+		number=`expr $$number + 1000` ; \
+	done
+
+camflow_apt_interval_eval: prepare_parsers prepare_graphchi_eval prepare_output download_camflow_apt_raw eval_camflow_apt_interval
 
 run_fivedirections_e3:
 	cd data/fivedirections-e3 && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
