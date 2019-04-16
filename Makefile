@@ -232,7 +232,7 @@ eval_camflow_apt:
 	cd build/parsers/camflow && make eval_camflow_apt WINDOW=3000 INTERVAL=6000
 	cd build/graphchi-cpp && make eval_camflow_apt WINDOW=3000 INTERVAL=6000
 
-camflow_apt_eval: prepare_parsers prepare_graphchi_eval download_camflow_apt_raw eval_camflow_apt
+camflow_apt_eval: prepare_parsers prepare_graphchi_eval prepare_output download_camflow_apt_raw eval_camflow_apt
 
 run_fivedirections_e3:
 	cd data/fivedirections-e3 && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
