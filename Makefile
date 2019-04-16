@@ -233,7 +233,7 @@ eval_camflow_apt_window:
 	window=500 ; while [ $$window -le 5500 ] ; do \
 		make -C build/parsers/camflow eval_camflow_apt WINDOW=$$window INTERVAL=6000 ; \
 		make -C build/graphchi-cpp eval_camflow_apt WINDOW=$$window INTERVAL=6000 ; \
-		number=`expr $$number + 500` ; \
+		window=`expr $$window + 500` ; \
 	done
 
 camflow_apt_window_eval: prepare_parsers prepare_graphchi_eval prepare_output download_camflow_apt_raw eval_camflow_apt_window
@@ -246,7 +246,7 @@ eval_camflow_apt_interval:
 	interval=1000 ; while [ $$window -le 10000 ] ; do \
 		make -C build/parsers/camflow eval_camflow_apt WINDOW=3000 INTERVAL=$$interval ; \
 		make -C build/graphchi-cpp eval_camflow_apt WINDOW=3000 INTERVAL=$$interval ; \
-		number=`expr $$number + 1000` ; \
+		interval=`expr $$interval + 1000` ; \
 	done
 
 camflow_apt_interval_eval: prepare_parsers prepare_graphchi_eval prepare_output download_camflow_apt_raw eval_camflow_apt_interval
