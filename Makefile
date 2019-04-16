@@ -251,6 +251,16 @@ eval_camflow_apt_interval:
 
 camflow_apt_interval_eval: prepare_parsers prepare_graphchi_eval prepare_output download_camflow_apt_raw eval_camflow_apt_interval
 
+eval_camflow_apt_general:
+	cd data/camflow-apt && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
+	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
+	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
+	make -C build/parsers/camflow eval_camflow_apt_prepare
+	make -C build/parsers/camflow eval_camflow_apt WINDOW=3000 INTERVAL=6000
+	make -C build/graphchi-cpp eval_camflow_apt WINDOW=3000 INTERVAL=6000
+
+camflow_apt_general_eval: prepare_parsers prepare_graphchi_eval prepare_output download_camflow_apt_raw eval_camflow_apt_general
+
 run_fivedirections_e3:
 	cd data/fivedirections-e3 && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
 	cd data/fivedirections-e3/train && mkdir -p base && mkdir -p stream
