@@ -222,7 +222,13 @@ run_camflow_apt_subset:
 camflow_apt_subset_hotfix_CV: prepare_parsers prepare_graphchi_hotfix prepare_modeling prepare_output download_camflow_apt run_camflow_apt_subset
 
 eval_camflow_apt:
-	cd build/graphchi-cpp && make eval_camflow_apt
+	cd data/camflow-apt && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
+	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
+	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
+	cd build/parsers/camflow && make eval_camflow_apt WINDOW=3000 INTERVAL=6000
+	cd build/graphchi-cpp && make eval_camflow_apt WINDOW=3000 INTERVAL=6000
+
+camflow_apt_eval: prepare_parsers prepare_graphchi_eval download_camflow_apt eval_camflow_apt
 
 run_fivedirections_e3:
 	cd data/fivedirections-e3 && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
