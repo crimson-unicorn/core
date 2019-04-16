@@ -116,7 +116,7 @@ Vagrant.configure("2") do |config|
     sudo yum -y install python-pip python-devel
     sudo yum -y install python3
     sudo pip install --upgrade pip
-    sudo pip install numpy scipy scikit-learn
+    sudo pip install numpy scipy scikit-learn xxhash
     sudo pip install tqdm==4.29.1
     # not installed: clang g++-4.9 mosquitto sparse flawfinder
     # for opentuner
@@ -139,7 +139,7 @@ Vagrant.configure("2") do |config|
     ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
     git clone https://github.com/crimson-unicorn/core.git
-    cd core && make camflow_apt_interval_tune
+    cd core && make spade_apt_subset_hotfix_CV
 
     # USE `vagrant scp` to transfer files between the guest and the host and vice versa
 
