@@ -243,7 +243,7 @@ eval_camflow_apt_interval:
 	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
 	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
 	make -C build/parsers/camflow eval_camflow_apt_prepare
-	interval=1000 ; while [ $$window -le 10000 ] ; do \
+	interval=1000 ; while [ $$interval -le 10000 ] ; do \
 		make -C build/parsers/camflow eval_camflow_apt WINDOW=3000 INTERVAL=$$interval ; \
 		make -C build/graphchi-cpp eval_camflow_apt WINDOW=3000 INTERVAL=$$interval ; \
 		interval=`expr $$interval + 1000` ; \
