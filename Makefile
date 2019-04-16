@@ -229,10 +229,10 @@ eval_camflow_apt_window:
 	cd data/camflow-apt && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
 	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
 	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
-	cd build/parsers/camflow && make eval_camflow_apt_prepare
+	make -C build/parsers/camflow eval_camflow_apt_prepare
 	window=500 ; while [ $$window -le 5500 ] ; do \
-		cd build/parsers/camflow && make eval_camflow_apt WINDOW=$$window INTERVAL=6000 ; \
-		cd build/graphchi-cpp && make eval_camflow_apt WINDOW=$$window INTERVAL=6000 ; \
+		make -C build/parsers/camflow eval_camflow_apt WINDOW=$$window INTERVAL=6000 ; \
+		make -C build/graphchi-cpp eval_camflow_apt WINDOW=$$window INTERVAL=6000 ; \
 		number=`expr $$number + 500` ; \
 	done
 
@@ -242,10 +242,10 @@ eval_camflow_apt_interval:
 	cd data/camflow-apt && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
 	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
 	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
-	cd build/parsers/camflow && make eval_camflow_apt_prepare
+	make -C build/parsers/camflow eval_camflow_apt_prepare
 	interval=1000 ; while [ $$window -le 10000 ] ; do \
-		cd build/parsers/camflow && make eval_camflow_apt WINDOW=3000 INTERVAL=$$interval ; \
-		cd build/graphchi-cpp && make eval_camflow_apt WINDOW=3000 INTERVAL=$$interval ; \
+		make -C build/parsers/camflow eval_camflow_apt WINDOW=3000 INTERVAL=$$interval ; \
+		make -C build/graphchi-cpp eval_camflow_apt WINDOW=3000 INTERVAL=$$interval ; \
 		number=`expr $$number + 1000` ; \
 	done
 
