@@ -313,9 +313,11 @@ run_spade_apt:
 	cd data/spade-wget-apt/test && mkdir -p base && mkdir -p stream
 	cd build/parsers/cdm && make spade_apt
 	cd build/graphchi-cpp && make spade_apt
-	cd build/modeling && python model.py --train_dir ../../data/spade-wget-apt/train_sketch/ --test_dir ../../data/spade-wget-apt/test_sketch/
+	cd build/modeling && python model.py --train_dir ../../data/spade-wget-apt/train_sketch/ --test_dir ../../data/spade-wget-apt/test_sketch/ > results.txt
 
 spade_apt: prepare download_spade_apt run_spade_apt
+
+spade_apt_hotfix_CV: prepare_parsers prepare_graphchi_hotfix prepare_modeling prepare_output download_spade_apt run_spade_apt
 
 run_spade_apt_subset:
 	cd data/spade-wget-apt && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
