@@ -266,8 +266,8 @@ eval_camflow_apt_cpu_mem:
 	cd data/camflow-apt/train && mkdir -p base && mkdir -p stream
 	cd data/camflow-apt/test && mkdir -p base && mkdir -p stream
 	make -C build/parsers/camflow eval_camflow_apt_prepare
-	make -C build/parsers/camflow eval_camflow_apt WINDOW=3000 INTERVAL=6000
-	make -C build/graphchi-cpp eval_camflow_apt_cpu_mem WINDOW=3000 INTERVAL=6000
+	make -C build/parsers/camflow eval_camflow_apt WINDOW=3000 INTERVAL=1000
+	make -C build/graphchi-cpp eval_camflow_apt_cpu_mem WINDOW=3000 INTERVAL=1000
 
 camflow_apt_cpu_mem_eval: prepare_parsers prepare_graphchi_eval prepare_output download_camflow_apt_raw eval_camflow_apt_cpu_mem
 
