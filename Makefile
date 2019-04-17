@@ -117,6 +117,10 @@ download_camflow_shellshock:
 	mkdir -p data
 	cd data && git clone git@github.com:michael-hahn/shellshock-apt-new-label.git shellshock-apt
 
+download_camflow_extended:
+	mkdir -p data
+	cd data && git clone git@github.com:crimson-unicorn/camflow-extended-dataset.git
+
 run_toy:
 	cd build/parsers && make toy
 	cd build/graphchi-cpp && make run_toy
@@ -270,6 +274,16 @@ eval_camflow_apt_cpu_mem:
 	make -C build/graphchi-cpp eval_camflow_apt_cpu_mem WINDOW=5500 INTERVAL=6000
 
 camflow_apt_cpu_mem_eval: prepare_parsers prepare_graphchi_eval prepare_output download_camflow_apt_raw eval_camflow_apt_cpu_mem
+
+eval_camflow_extended_cpu_mem:
+	cd data/camflow-extended-dataset && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
+	cd data/camflow-extended-dataset/train && mkdir -p base && mkdir -p stream
+	cd data/camflow-extended-dataset/test && mkdir -p base && mkdir -p stream
+	make -C build/parsers/camflow eval_camflow_extended_prepare
+	make -C build/parsers/camflow eval_camflow_extended WINDOW=5500 INTERVAL=6000
+	make -C build/graphchi-cpp eval_camflow_extended_cpu_mem WINDOW=5500 INTERVAL=6000
+
+camflow_extended_cpu_mem_eval: prepare_parsers prepare_graphchi_eval prepare_output download_camflow_extended eval_camflow_extended_cpu_mem
 
 run_fivedirections_e3:
 	cd data/fivedirections-e3 && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
