@@ -303,9 +303,11 @@ run_clearscope_e3:
 	cd data/clearscope-e3/test && mkdir -p base && mkdir -p stream
 	cd build/parsers/cdm && make clearscope_e3
 	cd build/graphchi-cpp && make clearscope_e3
-	cd build/modeling && python model.py --train_dir ../../data/clearscope-e3/train_sketch/ --test_dir ../../data/clearscope-e3/test_sketch/
+	cd build/modeling && python model.py --train_dir ../../data/clearscope-e3/train_sketch/ --test_dir ../../data/clearscope-e3/test_sketch/ > results.txt
 
 clearscope_e3: prepare download_clearscope_e3 run_clearscope_e3
+
+clearscope_e3_hotfix_CV: prepare_parsers prepare_graphchi_hotfix prepare_modeling prepare_output download_clearscope_e3 run_clearscope_e3
 
 run_spade_apt:
 	cd data/spade-wget-apt && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
