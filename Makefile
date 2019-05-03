@@ -193,9 +193,11 @@ run_cadets_e3:
 	cd data/cadets-e3/test && mkdir -p base && mkdir -p stream
 	cd build/parsers/cdm && make cadets_e3
 	cd build/graphchi-cpp && make cadets_e3
-	cd build/modeling && python model.py --train_dir ../../data/cadets-e3/train_sketch/ --test_dir ../../data/cadets-e3/test_sketch/
+	cd build/modeling && python model.py --train_dir ../../data/cadets-e3/train_sketch/ --test_dir ../../data/cadets-e3/test_sketch/ > results.txt
 
 cadets_e3: prepare download_cadets_e3 run_cadets_e3
+
+cadets_e3_hotfix_CV: prepare_parsers prepare_graphchi_hotfix prepare_modeling prepare_output download_cadets_e3 run_cadets_e3
 
 run_theia_e3:
 	cd data/theia-e3 && mkdir -p edgelists_benign && mkdir -p edgelists_attack && mkdir -p train && mkdir -p test
