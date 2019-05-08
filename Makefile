@@ -146,7 +146,7 @@ streamspot: prepare download_streamspot run_streamspot
 
 run_streamspot_parsed:
 	cd build/graphchi-cpp && make run_youtube && make run_gmail && make run_vgame && make run_download && make run_cnn && make run_attack
-	cd build/modeling && python model.py --train_dir ../../data/train_streamspot/ --test_dir ../../data/test_streamspot/
+	cd build/modeling && python model.py --train_dir ../../data/train_streamspot/ --test_dir ../../data/test_streamspot/ > results.txt
 
 streamspot_hotfix: prepare_parsers prepare_graphchi_hotfix prepare_modeling_1_0 prepare_output download_streamspot_parsed run_streamspot_parsed
 
