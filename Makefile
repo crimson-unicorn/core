@@ -73,6 +73,15 @@ download_streamspot:
 	mkdir -p data
 	$(call dataverse_download,10.7910/DVN/83KYJY/JVJXX5)
 
+download_streamspot_parsed:
+	mkdir -p data
+	$(call dataverse_download,10.7910/DVN/83KYJY/2MXIOX)
+	$(call dataverse_download,10.7910/DVN/83KYJY/OGLWB4)
+	$(call dataverse_download,10.7910/DVN/83KYJY/WYRXPD)
+	$(call dataverse_download,10.7910/DVN/83KYJY/5ODRYF)
+	$(call dataverse_download,10.7910/DVN/83KYJY/2EQZ4L)
+	$(call dataverse_download,10.7910/DVN/83KYJY/WKXIAY)
+
 download_cadets:
 	mkdir -p data
 	$(call dataverse_download,10.7910/DVN/MPUCQU/GAMHTP)
@@ -134,6 +143,12 @@ run_streamspot:
 	cd build/modeling && python model.py --train_dir ../../data/train_streamspot/ --test_dir ../../data/test_streamspot/
 
 streamspot: prepare download_streamspot run_streamspot
+
+run_streamspot_parsed:
+	cd build/graphchi-cpp && make run_youtube && make run_gmail && make run_vgame && make run_download && make run_cnn && make run_attack
+	cd build/modeling && python model.py --train_dir ../../data/train_streamspot/ --test_dir ../../data/test_streamspot/
+
+streamspot_hotfix: prepare_parsers prepare_graphchi_hotfix prepare_modeling_1_0 prepare_output download_streamspot_parsed run_streamspot_parsed
 
 parse_wget_1_0:
 	cd build/parsers && make wget_train && make wget_baseline_attack && make wget_interval_attack
