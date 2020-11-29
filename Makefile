@@ -1,8 +1,8 @@
-parsers-version=master
+parsers-version=evasion
 graphchi-version=memory
 modeling-version=master
-graphchi-hotfix=incremental
-modeling-hotfix=incremental
+graphchi-hotfix=evasion
+modeling-hotfix=evasion
 graphchi-eval=eval_incremental
 
 prepare_parsers:
